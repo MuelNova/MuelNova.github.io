@@ -1,5 +1,5 @@
 import { themes as prismThemes } from "prism-react-renderer";
-import type { Config, PluginConfig } from "@docusaurus/types";
+import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 
 import tailwind from "tailwindcss";
@@ -16,7 +16,7 @@ const internetProfiles: Record<string, { label: string; href: string }> = {
   },
   resume: {
     label: "Resume",
-    href: "https://zm.md/resume",
+    href: "/resume",
   },
   blog: {
     label: "Blog",
@@ -28,7 +28,7 @@ const config: Config = {
   title: "Miao Zhao (MuEl Nova)",
   tagline:
     "Yet another System Security Researcher and Developer passionate about CTF and Anime",
-  favicon: "img/favicon.ico",
+  favicon: "img/nova-logo-par.png",
 
   // Set the production url of your site here
   url: "https://zm.md",
@@ -50,7 +50,7 @@ const config: Config = {
   // useful metadata like html lang. For example, if your site is Chinese, you
   // may want to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: "zh-Hans",
+    defaultLocale: "en",
     locales: ["zh-Hans", "en"],
   },
 
@@ -58,10 +58,7 @@ const config: Config = {
     [
       "classic",
       {
-        docs: {
-          sidebarPath: "./sidebars.ts",
-          editCurrentVersion: false,
-        },
+        docs: false,
         blog: false,
         theme: {
           customCss: "./src/css/custom.css",
@@ -93,15 +90,13 @@ const config: Config = {
       title: "Miao Zhao",
       logo: {
         alt: "Miao Zhao (MuEl Nova)",
-        src: "img/logo.svg",
+        src: "img/nova-logo-par.png",
       },
       items: [
-        // {
-        //   type: "docSidebar",
-        //   sidebarId: "tutorialSidebar",
-        //   position: "left",
-        //   label: "Tutorial",
-        // },
+        {
+          type: "localeDropdown",
+          position: "right",
+        },
         { href: "https://nova.gal", label: "Blog", position: "left" },
         {
           to: internetProfiles.resume.href,
