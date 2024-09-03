@@ -1,10 +1,33 @@
 import { themes as prismThemes } from "prism-react-renderer";
-import type { Config } from "@docusaurus/types";
+import type { Config, PluginConfig } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
+
+import tailwind from "tailwindcss";
+import autoprefixer from "autoprefixer";
+
+const internetProfiles: Record<string, { label: string; href: string }> = {
+  github: {
+    label: "GitHub",
+    href: "https://github.com/MuelNova",
+  },
+  email: {
+    label: "Email",
+    href: "mailto:muel@nova.gal",
+  },
+  resume: {
+    label: "Resume",
+    href: "https://zm.md/resume",
+  },
+  blog: {
+    label: "Blog",
+    href: "https://nova.gal",
+  },
+};
 
 const config: Config = {
   title: "Miao Zhao (MuEl Nova)",
-  tagline: "Dinosaurs are cool",
+  tagline:
+    "Yet another System Security Researcher and Developer passionate about CTF and Anime",
   favicon: "img/favicon.ico",
 
   // Set the production url of your site here
@@ -27,8 +50,8 @@ const config: Config = {
   // useful metadata like html lang. For example, if your site is Chinese, you
   // may want to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: "en",
-    locales: ["en"],
+    defaultLocale: "zh-Hans",
+    locales: ["zh-Hans", "en"],
   },
 
   presets: [
@@ -37,26 +60,9 @@ const config: Config = {
       {
         docs: {
           sidebarPath: "./sidebars.ts",
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
+          editCurrentVersion: false,
         },
-        blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ["rss", "atom"],
-            xslt: true,
-          },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
-          // Useful options to enforce blogging best practices
-          onInlineTags: "warn",
-          onInlineAuthors: "warn",
-          onUntruncatedBlogPosts: "warn",
-        },
+        blog: false,
         theme: {
           customCss: "./src/css/custom.css",
         },
@@ -64,80 +70,82 @@ const config: Config = {
     ],
   ],
 
+  stylesheets: [
+    {
+      href: "https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css",
+      type: "text/css",
+      integrity:
+        "sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X",
+      crossorigin: "anonymous",
+    },
+  ],
+
   themeConfig: {
     // Replace with your project's social card
-    image: "img/docusaurus-social-card.jpg",
+    // image: "img/docusaurus-social-card.jpg",
+    colorMode: {
+      defaultMode: "dark",
+      disableSwitch: true,
+      respectPrefersColorScheme: false,
+    },
     navbar: {
-      title: "My Site",
+      hideOnScroll: true,
+      title: "Miao Zhao",
       logo: {
-        alt: "My Site Logo",
+        alt: "Miao Zhao (MuEl Nova)",
         src: "img/logo.svg",
       },
       items: [
+        // {
+        //   type: "docSidebar",
+        //   sidebarId: "tutorialSidebar",
+        //   position: "left",
+        //   label: "Tutorial",
+        // },
+        { href: "https://nova.gal", label: "Blog", position: "left" },
         {
-          type: "docSidebar",
-          sidebarId: "tutorialSidebar",
-          position: "left",
-          label: "Tutorial",
+          to: internetProfiles.resume.href,
+          label: internetProfiles.resume.label,
+          position: "right",
         },
-        { to: "/blog", label: "Blog", position: "left" },
         {
-          href: "https://github.com/facebook/docusaurus",
-          label: "GitHub",
+          to: "/projects",
+          label: "Projects",
           position: "right",
         },
       ],
     },
     footer: {
-      style: "dark",
       links: [
         {
-          title: "Docs",
-          items: [
-            {
-              label: "Tutorial",
-              to: "/docs/intro",
-            },
-          ],
+          title: "Connect",
+          items: [internetProfiles.github, internetProfiles.email],
         },
         {
-          title: "Community",
-          items: [
-            {
-              label: "Stack Overflow",
-              href: "https://stackoverflow.com/questions/tagged/docusaurus",
-            },
-            {
-              label: "Discord",
-              href: "https://discordapp.com/invite/docusaurus",
-            },
-            {
-              label: "Twitter",
-              href: "https://twitter.com/docusaurus",
-            },
-          ],
-        },
-        {
-          title: "More",
-          items: [
-            {
-              label: "Blog",
-              to: "/blog",
-            },
-            {
-              label: "GitHub",
-              href: "https://github.com/facebook/docusaurus",
-            },
-          ],
+          title: "Discover",
+          items: [internetProfiles.blog, internetProfiles.resume],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `<a href="https://nova.gal">Made by Nova</a> • <a href="https://github.com/MuelNova/MuelNova.github.io/commits/main">Updated ${new Date().toLocaleDateString()}</a>`,
     },
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
     },
   } satisfies Preset.ThemeConfig,
+
+  plugins: [
+    async function tailwindPlugin(context, options) {
+      return {
+        name: "docusaurus-tailwindcss",
+        configurePostCss(postcssOptions) {
+          postcssOptions.plugins.push(tailwind);
+          postcssOptions.plugins.push(autoprefixer);
+          return postcssOptions;
+        },
+      };
+    },
+  ],
 };
 
 export default config;
