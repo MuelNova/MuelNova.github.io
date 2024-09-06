@@ -78,10 +78,12 @@ function Home() {
               <a href={"https://netsec.ccert.edu.cn/chs/vul337"}>vul337</a> and
               (Self-Proclaimed) Developer in China.
             </p>
-            <p>🚀 I am a big fan of Operating System and System Exploiting.</p>
             <p>
-              🌏 To me, Computer and OS are the closest things to magic we have
-              on Earth.
+              🚀 I am a big fan of Operating Systems and System Exploitation.
+            </p>
+            <p>
+              🌏 To me, Computers and Operating Systems are the closest things
+              to magic we have on Earth.
             </p>
             <p>
               🎒 I am a{" "}
@@ -90,7 +92,7 @@ function Home() {
               <a href="https://www.bupt.edu.cn/">
                 Beijing University of Posts and Telecommunications
               </a>{" "}
-              from 2021
+              since 2021
             </p>
             <p>
               🧑‍🏫 I was a Pwner in Team 天枢Dubhe (Tianshu Dubhe) and Team
