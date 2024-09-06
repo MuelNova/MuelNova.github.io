@@ -1,30 +1,37 @@
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { faIcons, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import {
   faGithub,
   faLinkedin,
-  faPadlet,
+  faXTwitter,
+  faSteam,
+  faQq,
 } from "@fortawesome/free-brands-svg-icons";
 
 const socialLinks = [
-  {
-    faIcon: faLinkedin,
-    alt: "Linkedin",
-    url: "https://www.linkedin.com/in/evanitsg/",
-  },
+  // {
+  //   faIcon: faSteam,
+  //   alt: "Steam",
+  //   url: "https://steamcommunity.com/id/muelnova",
+  // },
   {
     faIcon: faGithub,
     alt: "GitHub",
-    url: "https://github.com/digipie",
+    url: "https://github.com/MuelNova",
   },
   {
-    faIcon: faPadlet,
-    alt: "Padlet",
-    url: "https://padlet.com/about/us/wish/1072760846",
+    faIcon: faQq,
+    alt: "QQ",
+    url: "https://qm.qq.com/q/2liGTvjIM",
+  },
+  {
+    faIcon: faXTwitter,
+    alt: "X",
+    url: "https://x.com/NovaNoir_",
   },
   {
     faIcon: faPaperPlane,
     alt: "Email",
-    url: "mailto:evan.it.sg@gmail.com",
+    url: "mailto:muel@nova.gal",
   },
 ];
 

@@ -4,6 +4,8 @@ import Link from "@docusaurus/Link";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
+import { SocialLinks } from "../data/SocialLinks";
+import socialLinks from "../data/_SocialLinks";
 
 import styles from "./styles.module.css";
 
@@ -100,6 +102,7 @@ function Home() {
         <section className={styles.directory}>
           <div className="container">
             <h3>Continue exploring?</h3>
+            <SocialLinks data={socialLinks} />
             <nav className="pagination-nav">
               <div className="pagination-nav__item">
                 <Link className="pagination-nav__link" to={"https://nova.gal"}>
