@@ -2,17 +2,16 @@
   padding: 2rem 0 4rem;
 }
 
-.socialLinks {
-  & > div:nth-child(odd) {
-    padding-right: calc(var(--ifm-spacing-horizontal) / 2);
-  }
-  & > div:nth-child(even) {
-    padding-left: calc(var(--ifm-spacing-horizontal) / 2);
-  }
+.socialLinks > div:nth-child(odd) {
+  padding-right: calc(var(--ifm-spacing-horizontal) / 2);
+}
 
-  & > div {
-    margin-bottom: var(--ifm-spacing-vertical);
-  }
+.socialLinks > div:nth-child(even) {
+  padding-left: calc(var(--ifm-spacing-horizontal) / 2);
+}
+
+.socialLinks > div {
+  margin-bottom: var(--ifm-spacing-vertical);
 }
 
 .col {
@@ -24,18 +23,20 @@
   width: 100%;
   border-color: var(--ifm-color-emphasis-200);
   padding: 1rem 0;
+}
 
-  &--active,
-  &:active,
-  &:hover,
-  &:focus {
-    .btnText {
-      color: var(--ifm-font-color-base-inverse);
-    }
-    .btnIcon {
-      fill: var(--ifm-font-color-base-inverse);
-    }
-  }
+.btn--active .btnText,
+.btn:active .btnText,
+.btn:hover .btnText,
+.btn:focus .btnText {
+  color: var(--ifm-font-color-base-inverse);
+}
+
+.btn--active .btnIcon,
+.btn:active .btnIcon,
+.btn:hover .btnIcon,
+.btn:focus .btnIcon {
+  fill: var(--ifm-font-color-base-inverse);
 }
 
 .btnIcon {
