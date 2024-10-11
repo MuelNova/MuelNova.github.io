@@ -47,7 +47,6 @@ function Home() {
             <span className="text-danger">Anime</span>
           </p>
 
-          {/* TODO: Add Social Links */}
           <br />
           <p>
             <a href="#main">

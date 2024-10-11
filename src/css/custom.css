@@ -31,6 +31,7 @@
   --ifm-color-danger: #db4437;
   --ifm-link-color: #0f9d58;
   --ifm-code-font-size: 95%;
+  --ifm-navbar-link-color: var(--ifm-color-secondary-lightest);
 }
 
 .docusaurus-highlight-code-line {

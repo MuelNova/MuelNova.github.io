@@ -2,13 +2,13 @@
   padding: 2rem 0 4rem;
 }
 
-.socialLinks > div:nth-child(odd) {
+/* .socialLinks > div:nth-child(2) {
   padding-right: calc(var(--ifm-spacing-horizontal) / 2);
 }
 
-.socialLinks > div:nth-child(even) {
+.socialLinks > div:nth-child(3) {
   padding-left: calc(var(--ifm-spacing-horizontal) / 2);
-}
+} */
 
 .socialLinks > div {
   margin-bottom: var(--ifm-spacing-vertical);
@@ -49,5 +49,4 @@
 
 .btnText {
   display: block;
-  color: var(--ifm-font-color-base);
 }

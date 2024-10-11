@@ -20,7 +20,7 @@ const socialLinks = [
   },
   {
     faIcon: faQq,
-    alt: "QQ",
+    alt: "QQ (4050909)",
     url: "https://qm.qq.com/q/2liGTvjIM",
   },
   {
