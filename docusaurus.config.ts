@@ -104,8 +104,8 @@ const config: Config = {
           position: "right",
         },
         {
-          to: "/projects",
-          label: "Projects",
+          to: "#publications",
+          label: "Publications",
           position: "right",
         },
       ],

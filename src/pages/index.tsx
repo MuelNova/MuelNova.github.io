@@ -73,8 +73,9 @@ function Home() {
           <div className={styles.aboutText}>
             <h2>Hi</h2>
             <p>
-              I am Nova, a System Security Researcher in{" "}
+              I am Nova, a System Security Researcher in group{" "}
               <a href={"https://netsec.ccert.edu.cn/chs/vul337"}>vul337</a> and
+              <a href={"https://github.com/pkucclab"}>pkucc</a>, a{" "}
               (Self-Proclaimed) Developer in China.
             </p>
             <p>
@@ -85,13 +86,14 @@ function Home() {
               to magic we have on Earth.
             </p>
             <p>
-              🎒 I am a{" "}
+              🎒 I received my Bachelor's degree in{" "}
               <a href="https://scss.bupt.edu.cn/">Cyber Security major</a> at
               the{" "}
               <a href="https://www.bupt.edu.cn/">
                 Beijing University of Posts and Telecommunications
               </a>{" "}
-              since 2021
+              (BUPT) in 2025, and I am currently pursuing a Master's degree in
+              <a href="https://www.pku.edu.cn/">Peking University</a>.
             </p>
             <p>
               🧑‍🏫 I was a Pwner in Team 天枢Dubhe (Tianshu Dubhe) and Team
