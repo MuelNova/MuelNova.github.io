@@ -1,14 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Resume from "@site/static/file/resume.pdf";
+import { navigate } from "@docusaurus/router";
 
-const ViewFile = () => {
+interface ViewFileProps {}
+
+const ViewFile: React.FC<ViewFileProps> = () => {
+  const [isOpening, setIsOpening] = useState(true);
+
   useEffect(() => {
-    const fileUrl = Resume;
-    window.open(fileUrl, "_blank");
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 1);
+    try {
+      const fileUrl = Resume;
+      const newWindow = window.open(fileUrl, "_blank");
+
+      if (newWindow) {
+        setIsOpening(false);
+        navigate("/");
+      } else {
+        console.error("Failed to open resume in new window");
+        setIsOpening(false);
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Error opening resume:", error);
+      setIsOpening(false);
+      navigate("/");
+    }
   }, []);
+
+  if (isOpening) {
+    return <div>Opening resume...</div>;
+  }
 
   return null;
 };

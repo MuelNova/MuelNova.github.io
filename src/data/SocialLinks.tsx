@@ -1,21 +1,21 @@
 import clsx from "clsx";
-import React, { FunctionComponent } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import styles from "./SocialLinks.module.css";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
-export interface SocialLinkData {
+import styles from "./SocialLinks.module.css";
+
+export type SocialLinkData = Readonly<{
   alt: string;
   url: string;
   faIcon: IconDefinition;
-}
+}>
 
-export interface SocialLinksProps {
-  data: SocialLinkData[];
-}
+export type SocialLinksProps = Readonly<{
+  data: readonly SocialLinkData[];
+}>
 
-export const SocialLinks: FunctionComponent<SocialLinksProps> = ({ data }) => {
+export const SocialLinks: React.FC<SocialLinksProps> = ({ data }) => {
   const socialLinksComponents = data.map(({ alt, url, faIcon }) => (
     <div className={clsx("col", styles.col)} key={alt}>
       <a

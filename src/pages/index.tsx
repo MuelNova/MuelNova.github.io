@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useReducer } from "react";
 
 import Link from "@docusaurus/Link";
 import useBaseUrl from "@docusaurus/useBaseUrl";
@@ -9,31 +9,68 @@ import socialLinks from "../data/_SocialLinks";
 
 import styles from "./styles.module.css";
 
-function Home() {
+type State = {
+  isLoading: boolean;
+  headerHeight: number;
+  bannerHeight: number;
+};
+
+type Action =
+  | { type: 'SET_DIMENSIONS'; headerHeight: number; bannerHeight: number }
+  | { type: 'SET_LOADING'; isLoading: boolean };
+
+const initialState: State = {
+  isLoading: true,
+  headerHeight: 1536,
+  bannerHeight: 256
+};
+
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case 'SET_DIMENSIONS':
+      return {
+        ...state,
+        headerHeight: action.headerHeight,
+        bannerHeight: action.bannerHeight
+      };
+    case 'SET_LOADING':
+      return {
+        ...state,
+        isLoading: action.isLoading
+      };
+    default:
+      return state;
+  }
+};
+
+function Home(): JSX.Element {
   const context = useDocusaurusContext();
   const { siteConfig } = context;
 
-  const mainRef = useRef(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [headerHeight, setHeaderHeight] = useState(1536);
-  const [bannerHeight, setBannerHeight] = useState(256);
+  const mainRef = useRef<HTMLElement>(null);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     const tempHeaderHeight = Math.max(384, window.innerHeight);
-    setHeaderHeight(tempHeaderHeight);
-    setBannerHeight(Math.max(256, tempHeaderHeight / 2));
-    setIsLoading(false);
-    mainRef.current.hidden = false;
+    dispatch({
+      type: 'SET_DIMENSIONS',
+      headerHeight: tempHeaderHeight,
+      bannerHeight: Math.max(256, tempHeaderHeight / 2)
+    });
+    dispatch({ type: 'SET_LOADING', isLoading: false });
+    if (mainRef.current) {
+      mainRef.current.hidden = false;
+    }
   }, []);
 
   return (
     <Layout title="Home" description={siteConfig.tagline}>
-      <header className={styles.heroBanner} style={{ minHeight: headerHeight }}>
+      <header className={styles.heroBanner} style={{ minHeight: state.headerHeight }}>
         <div
           className={styles.heroBannerWrapper}
           style={{
-            minHeight: bannerHeight,
-            display: isLoading ? "none" : "block",
+            minHeight: state.bannerHeight,
+            display: state.isLoading ? "none" : "block",
           }}
         >
           <p>Hi, my name is</p>
