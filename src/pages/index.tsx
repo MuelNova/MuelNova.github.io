@@ -16,27 +16,27 @@ type State = {
 };
 
 type Action =
-  | { type: 'SET_DIMENSIONS'; headerHeight: number; bannerHeight: number }
-  | { type: 'SET_LOADING'; isLoading: boolean };
+  | { type: "SET_DIMENSIONS"; headerHeight: number; bannerHeight: number }
+  | { type: "SET_LOADING"; isLoading: boolean };
 
 const initialState: State = {
   isLoading: true,
   headerHeight: 1536,
-  bannerHeight: 256
+  bannerHeight: 256,
 };
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case 'SET_DIMENSIONS':
+    case "SET_DIMENSIONS":
       return {
         ...state,
         headerHeight: action.headerHeight,
-        bannerHeight: action.bannerHeight
+        bannerHeight: action.bannerHeight,
       };
-    case 'SET_LOADING':
+    case "SET_LOADING":
       return {
         ...state,
-        isLoading: action.isLoading
+        isLoading: action.isLoading,
       };
     default:
       return state;
@@ -53,11 +53,11 @@ function Home(): JSX.Element {
   useEffect(() => {
     const tempHeaderHeight = Math.max(384, window.innerHeight);
     dispatch({
-      type: 'SET_DIMENSIONS',
+      type: "SET_DIMENSIONS",
       headerHeight: tempHeaderHeight,
-      bannerHeight: Math.max(256, tempHeaderHeight / 2)
+      bannerHeight: Math.max(256, tempHeaderHeight / 2),
     });
-    dispatch({ type: 'SET_LOADING', isLoading: false });
+    dispatch({ type: "SET_LOADING", isLoading: false });
     if (mainRef.current) {
       mainRef.current.hidden = false;
     }
@@ -65,7 +65,10 @@ function Home(): JSX.Element {
 
   return (
     <Layout title="Home" description={siteConfig.tagline}>
-      <header className={styles.heroBanner} style={{ minHeight: state.headerHeight }}>
+      <header
+        className={styles.heroBanner}
+        style={{ minHeight: state.headerHeight }}
+      >
         <div
           className={styles.heroBannerWrapper}
           style={{
@@ -111,7 +114,7 @@ function Home(): JSX.Element {
             <h2>Hi</h2>
             <p>
               I am Nova, a System Security Researcher in group{" "}
-              <a href={"https://netsec.ccert.edu.cn/chs/vul337"}>vul337</a> and
+              <a href={"https://netsec.ccert.edu.cn/chs/vul337"}>vul337</a> and{" "}
               <a href={"https://github.com/pkucclab"}>pkucc</a>, a{" "}
               (Self-Proclaimed) Developer in China.
             </p>
@@ -129,8 +132,8 @@ function Home(): JSX.Element {
               <a href="https://www.bupt.edu.cn/">
                 Beijing University of Posts and Telecommunications
               </a>{" "}
-              (BUPT) in 2025, and I am currently pursuing a Master's degree in
-              <a href="https://www.pku.edu.cn/">Peking University</a>.
+              (BUPT) in 2025, and I am currently pursuing a Master's degree in{" "}
+              <a href="https://www.pku.edu.cn/">Peking University</a>(PKU).
             </p>
             <p>
               🧑‍🏫 I was a Pwner in Team 天枢Dubhe (Tianshu Dubhe) and Team
