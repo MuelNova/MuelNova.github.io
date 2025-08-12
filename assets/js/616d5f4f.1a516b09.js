@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkMuelNova_github_io=self.webpackChunkMuelNova_github_io||[]).push([[225],{2625:(e,f,s)=>{s.r(f),s.d(f,{default:()=>t});var u=s(6540);const o=s.p+"assets/files/resume-b1783e859b1ea66f3f49f04d74ff65f9.pdf",t=()=>((0,u.useEffect)((()=>{const e=o;window.open(e,"_blank"),setTimeout((()=>{window.location.href="/"}),1)}),[]),null)}}]);
