@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router";
-import { MotionProvider } from "@/hooks/useMotion";
+import { MotionProvider } from "@/components/MotionProvider";
 import Home from "./pages/Home";
 
 export default function App() {

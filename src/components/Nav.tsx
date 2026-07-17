@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { nav, profile } from "@/data/content";
 import { useMotion } from "@/hooks/useMotion";
 
@@ -23,13 +23,24 @@ function useScrollSpy() {
   return active;
 }
 
-/** 是否还悬在星空首屏上（决定导航是「浮在天上」还是「凝成仪器」） */
+/** 是否还悬在星空首屏上（决定导航是「浮在天上」还是「凝成仪器」）
+ *  迟滞：几乎飞出首屏才凝壳（<8%），明显回到首屏才展开（>30%）——
+ *  否则磁吸/吸附停在边界附近时两态反复翻转，肉眼看到的就是「抖一下」。
+ *  注意：IO 会把一拍内连穿多条阈值的记录合并成一次回调（磁吸 expo 前段极快，
+ *  三条阈值常合并成一帧），必须取批次的最后一条作为最终状态——只读第一条会
+ *  把「已回到首屏」判丢，导航就卡在胶囊态再不铺开。 */
 function useOverSky() {
   const [over, setOver] = useState(true);
   useEffect(() => {
     const el = document.getElementById("sky");
     if (!el) return;
-    const o = new IntersectionObserver(([e]) => setOver(e.isIntersecting), { threshold: 0.12 });
+    const o = new IntersectionObserver(
+      (entries) => {
+        const e = entries[entries.length - 1];
+        setOver((prev) => (prev ? e.intersectionRatio > 0.08 : e.intersectionRatio > 0.3));
+      },
+      { threshold: [0, 0.08, 0.3] }
+    );
     o.observe(el);
     return () => o.disconnect();
   }, []);
@@ -51,6 +62,54 @@ export default function Nav() {
   const active = useScrollSpy();
   const overSky = useOverSky();
 
+  // 两态切换时子块的铺 ⇆ 拢：外壳瞬时切换排布（此刻透明，切换本身看不见），
+  // 用 FLIP 让词标 / 链接组 / 操作组从旧排布滑入新排布；毛玻璃外观由 CSS 过渡接管。
+  // 宽度绝不做动画——fit-content 内禀尺寸插值不可靠，且宽度补间会把链接挤换行，
+  // 肉眼就是「高一下又突然矮回去」。
+  const shellRef = useRef<HTMLElement>(null);
+  const prevOver = useRef(overSky);
+  const prevRects = useRef<DOMRect[] | null>(null);
+  const flips = useRef(new Set<Animation>());
+
+  // 无依赖数组：每次提交都跑。空闲（无在途 FLIP）时持续记录真实排布，
+  // 滚动侦查重渲染、窗口 resize、字体晚载造成的位移都被自然吸收。
+  useLayoutEffect(() => {
+    const el = shellRef.current;
+    if (!el) return;
+    const kids = Array.from(el.children) as HTMLElement[];
+    const flipping = prevOver.current !== overSky;
+    prevOver.current = overSky;
+    if (!flipping) {
+      if (flips.current.size === 0) prevRects.current = kids.map((k) => k.getBoundingClientRect());
+      return;
+    }
+    // 视觉位置含在途 FLIP 的位移；先取消，量到的才是新布局的真实位置。
+    // 只取消自己建的动画（getAnimations 会误伤子项自身的 hover/颜色过渡）
+    const visual = kids.map((k) => k.getBoundingClientRect());
+    flips.current.forEach((a) => a.cancel());
+    const base = kids.map((k) => k.getBoundingClientRect());
+    const prev = prevRects.current;
+    prevRects.current = base;
+    if (!motionOn) return;
+    kids.forEach((k, i) => {
+      // 优先从被打断的可视位置接起；否则从上一布局滑来
+      let dx = visual[i].left - base[i].left;
+      let dy = visual[i].top - base[i].top;
+      if (Math.abs(dx) < 1 && Math.abs(dy) < 1 && prev) {
+        dx = prev[i].left - base[i].left;
+        dy = prev[i].top - base[i].top;
+      }
+      if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
+      const anim = k.animate(
+        [{ transform: `translate(${dx}px, ${dy}px)` }, { transform: "translate(0px, 0px)" }],
+        { duration: 500, easing: "cubic-bezier(0.16, 1, 0.3, 1)" } // --ease-out
+      );
+      flips.current.add(anim);
+      const settle = () => flips.current.delete(anim);
+      anim.finished.then(settle, settle);
+    });
+  });
+
   // 全屏菜单打开时：Esc 关闭 + 锁背景滚动
   useEffect(() => {
     if (!open) return;
@@ -67,11 +126,12 @@ export default function Nav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       <nav
+        ref={shellRef}
         aria-label="主导航"
         className={
           overSky
-            ? "nav-shell nav-over-sky mx-auto flex max-w-5xl items-center justify-between gap-3 rounded-full border px-4 sm:mx-4 lg:mx-auto"
-            : "nav-shell mx-auto flex w-fit max-w-[calc(100vw-1.5rem)] items-center justify-center gap-4 rounded-full border px-4"
+            ? "nav-shell nav-over-sky mx-3 flex items-center justify-between gap-3 rounded-full border px-4 sm:mx-5"
+            : "nav-shell mx-auto flex w-fit max-w-[calc(100vw-1.5rem)] items-center justify-between gap-4 rounded-full border px-4"
         }
         style={
           overSky

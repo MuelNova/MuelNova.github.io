@@ -5,19 +5,19 @@ import StarSky from "@/components/StarSky";
 import StarNode from "@/components/StarNode";
 import WandCursor from "@/components/WandCursor";
 import { constellationLines, heroStar, stars as starContent } from "@/data/stars";
-import { dailyLayout } from "@/data/skyLayout";
+import { randomLayout } from "@/data/skyLayout";
 import { useMotion } from "@/hooks/useMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* 每日星象：坐标按当日种子生成（stars.ts 里的内容不变，位置每天换） */
-const LAYOUT = dailyLayout(starContent);
+/* 每访星象：坐标当场取随机种子生成（stars.ts 里的内容不变，位置每次刷新换） */
+const LAYOUT = randomLayout(starContent);
 const STARS = starContent.map((s) => ({ ...s, ...LAYOUT[s.id] }));
 const LINES = constellationLines(STARS);
 const LINE_COLORS: Record<string, string> = {
-  core: "rgba(255,110,199,.5)",
-  build: "rgba(255,224,102,.45)",
-  link: "rgba(94,231,255,.45)",
+  core: "rgba(var(--pink-rgb),.5)",
+  build: "rgba(var(--yellow-rgb),.45)",
+  link: "rgba(var(--cyan-rgb),.45)",
 };
 
 /**

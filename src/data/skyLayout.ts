@@ -1,9 +1,9 @@
 import type { Star } from "./stars";
 
 /**
- * skyLayout —— 每日星象。
- * 星星（互动星）的位置不再手写死，而是按「访客本地日期」做种子生成：
- * 同一天内刷新不变，跨天自动换一片新星空。
+ * skyLayout —— 每访星象。
+ * 星星（互动星）的位置不再手写死，而是当场取随机种子生成：
+ * 每次到访/刷新都是一片新星空；页面存活期内布局不变（模块级常量）。
  * 手调坐标仍留在 stars.ts 里，作为内容锚点与生成失败时的兜底参考。
  */
 
@@ -18,16 +18,9 @@ export function mulberry32(seed: number) {
   };
 }
 
-/** 每日种子：按访客本地日期（FNV-1a 哈希），跨天才变 */
-export function dailySeed(): number {
-  const d = new Date();
-  const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-  let h = 2166136261 >>> 0;
-  for (let i = 0; i < key.length; i++) {
-    h ^= key.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return h >>> 0;
+/** 每访种子：当场随机，每次加载都不一样 */
+export function freshSeed(): number {
+  return (Math.random() * 4294967296) >>> 0;
 }
 
 type Pt = { x: number; y: number };
@@ -71,10 +64,10 @@ function sample(
 const round1 = (n: number) => Math.round(n * 10) / 10;
 
 /**
- * 每日星象布局：返回 { [starId]: { x, y, mx, my } }。
+ * 每访星象布局：返回 { [starId]: { x, y, mx, my } }。
  * 先放常亮星再放探索星；桌面避开标题与月亮，移动端天然分带避开中央。
  */
-export function dailyLayout(all: Star[], seed = dailySeed()) {
+export function randomLayout(all: Star[], seed = freshSeed()) {
   const rng = mulberry32((seed ^ 0x9e3779b9) >>> 0);
   const ordered = [...all.filter((s) => s.featured), ...all.filter((s) => !s.featured)];
   const placedDesktop: Pt[] = [];

@@ -1,6 +1,6 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import { useMotion } from "@/hooks/useMotion";
-import { dailySeed, mulberry32 } from "@/data/skyLayout";
+import { freshSeed, mulberry32 } from "@/data/skyLayout";
 
 /**
  * StarSky —— anime 风夜空场景（纯 CSS，装饰层，aria-hidden）。
@@ -58,12 +58,12 @@ function currentPhase(): PhaseKey {
   return "night";
 }
 
-/* ---------- 程序化星尘：每日种子随机，同一天内稳定，跨天换一片星野 ---------- */
+/* ---------- 程序化星尘：当场取随机种子，每次到访/刷新换一片星野 ---------- */
 const DUST_TINTS = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffd7f0", "#d0f4ff", "#ffe8a8"];
 const DUST_SIZES = [1, 1, 1, 1.5, 1.5, 2.25];
 
 const DUST = (() => {
-  const rng = mulberry32(dailySeed());
+  const rng = mulberry32(freshSeed());
   return Array.from({ length: 120 }, (_, i) => {
     const size = DUST_SIZES[Math.floor(rng() * DUST_SIZES.length)];
     return {
@@ -111,7 +111,7 @@ export default function StarSky() {
         className="anim-glow sky-phase absolute -left-[10%] top-[8%] h-[40%] w-[130%]"
         style={{
           background:
-            "linear-gradient(100deg, transparent 20%, rgba(94,231,255,.14) 42%, rgba(164,135,255,.18) 55%, rgba(255,110,199,.14) 68%, transparent 85%)",
+            "linear-gradient(100deg, transparent 20%, rgba(var(--cyan-rgb),.14) 42%, rgba(var(--violet-rgb),.18) 55%, rgba(var(--pink-rgb),.14) 68%, transparent 85%)",
           filter: "blur(40px)",
           animationDelay: "-4s",
           opacity: now.aurora,
@@ -206,7 +206,7 @@ export default function StarSky() {
         style={{ background: "radial-gradient(ellipse, rgba(180,200,255,.5), transparent 70%)", filter: "blur(22px)", animationDelay: "-9s" }}
       />
       {/* 底部压暗 + 收尾到实底，让星空干净地「落」到传统区 */}
-      <div className="absolute inset-x-0 bottom-0 h-1/3" style={{ background: "linear-gradient(transparent, rgba(11,7,19,.55))" }} />
+      <div className="absolute inset-x-0 bottom-0 h-1/3" style={{ background: "linear-gradient(transparent, rgba(var(--bg-rgb),.55))" }} />
       <div className="absolute inset-x-0 bottom-0 h-24" style={{ background: "linear-gradient(transparent, var(--bg))" }} />
     </div>
   );

@@ -5,33 +5,11 @@
 
 export const profile = {
   name: "MuelNova",
-  aka: "muir / Miao Zhao",
-  /** 像素字体显示的片假名 */
-  kana: "ミュエル・ノヴァ",
-  role: "Security Researcher · Retired Pwner",
-  bio: "Security Researcher at THU@vul337 & PKU@pkucclab · Pwner@天枢Dubhe (retired) & PKUCC",
-  tagline: "Hacking 4 fun!",
-  location: "Isekai",
-  email: "muel@nova.gal",
   github: "https://github.com/MuelNova",
-  twitter: "https://x.com/NovaNoir_",
-  blog: "https://nova.gal/blog/",
+  blog: "https://zm.md/", // not showing to public
   /** curl zm.md 拿到的纯文本简历路径（由 CF Worker 提供） */
   cvTxt: "/cv.txt",
   gpg: "6C4F 47DB A3A8 EB3B 5670 172A 6AC1 E2FC FE4A A441",
-};
-
-export const hero = {
-  /** 首屏大字下的一句自我介绍，别太长 */
-  intro:
-    "I break and build systems. Security researcher working with vul337 (THU) and PKU CCLab — " +
-    "before that, a PWNer of 天枢Dubhe playing CTFs from 强网拟态 to 西湖论剑.",
-  /** 三个侧标小注 */
-  notes: [
-    { k: "focus", v: "memory safety, kernel pwn" },
-    { k: "tools", v: "GDB, pwntools, angr" },
-    { k: "elsewhere", v: "FFXIV, ricing, 追番" },
-  ],
 };
 
 export const about = {
@@ -41,18 +19,38 @@ export const about = {
     "Outside the debugger: desktop ricing (GlazeWM/zebar), an Obsidian bullet-journal template, an FFXIV raid sim, a co-op chat mod for Slay the Spire 2, and a beancount bookkeeping service. I watch a probably-unhealthy amount of anime.",
   ],
   facts: [
+    { k: "work", v: "Moonshot AI (Intern)" },
     { k: "research", v: "THU@vul337 · PKU@pkucclab" },
     { k: "education", v: "PKU CS (M.S.) · BUPT Cybersecurity (B.S.)" },
     { k: "ctf", v: "天枢Dubhe — PWNer (retired)" },
-    { k: "location", v: "Isekai" },
   ],
 };
 
 export const milestones = [
-  { year: "now", title: "Kimi Security Intern", desc: "Moonshot AI（月之暗面）", color: "yellow" },
-  { year: "now", title: "Security research", desc: "vul337 @ THU · CCLab @ PKU — memory safety", color: "pink" },
-  { year: "2025", title: "PKU CS, M.S.", desc: "Graduate school, School of Computer Science", color: "cyan" },
-  { year: "2021–25", title: "BUPT · CTF PWNer", desc: "Cybersecurity B.S. · 天枢Dubhe — 强网拟态, 西湖论剑, HGAME…", color: "violet" },
+  {
+    year: "now",
+    title: "Kimi Security Intern",
+    desc: "Moonshot AI",
+    color: "yellow",
+  },
+  {
+    year: "now",
+    title: "Security research",
+    desc: "vul337 @ THU · CCLab @ PKU — memory safety",
+    color: "pink",
+  },
+  {
+    year: "2025",
+    title: "PKU CS, M.S.",
+    desc: "Graduate school, School of Computer Science",
+    color: "cyan",
+  },
+  {
+    year: "2021–25",
+    title: "BUPT · CTF PWNer",
+    desc: "Cybersecurity B.S. · 天枢Dubhe — 强网拟态, 西湖论剑, HGAME…",
+    color: "violet",
+  },
 ] as const;
 
 export const interests = [
@@ -180,7 +178,10 @@ export const sideProjects: Project[] = [
 ];
 
 export const skills = [
-  { group: "Languages", items: ["Python", "Go", "TypeScript", "C++", "Rust (learning)"] },
+  {
+    group: "Languages",
+    items: ["Python", "Go", "TypeScript", "C++", "Rust (learning)"],
+  },
   { group: "PWN / RE", items: ["GDB", "pwntools", "angr", "glibc heap"] },
   { group: "Systems", items: ["Linux", "Arch", "Docker", "WSL kernels"] },
   { group: "Web", items: ["Astro", "Tailwind", "React", "Cloudflare Workers"] },
@@ -188,7 +189,7 @@ export const skills = [
 
 export const socials = [
   { label: "GitHub", handle: "@MuelNova", url: "https://github.com/MuelNova" },
-  { label: "Blog", handle: "nova.gal/blog", url: "https://nova.gal/blog/" },
+  { label: "Blog", handle: "nova.gal/blog", url: profile.blog },
   { label: "Twitter", handle: "@NovaNoir_", url: "https://x.com/NovaNoir_" },
   { label: "Email", handle: "muel@nova.gal", url: "mailto:muel@nova.gal" },
 ];
@@ -205,5 +206,84 @@ export const nav = [
 
 /** 页脚细带跑马灯（克制度：只在页脚） */
 export const marqueeWords = [
-  "MAGICAL", "SECURITY", "PWN", "NEKO", "KERNEL", "STARS", "KAWAII", "TERMINAL",
+  "MAGICAL",
+  "SECURITY",
+  "PWN",
+  "NEKO",
+  "KERNEL",
+  "STARS",
+  "KAWAII",
+  "TERMINAL",
 ];
+
+/** 每个区块的片假名小注 + 标题（Section 的 kana/title） */
+export const sectionTitles = {
+  about: { kana: "アバウト", title: "About" },
+  journey: { kana: "タビジ", title: "Journey & Interests" },
+  projects: { kana: "プロジェクト", title: "Projects" },
+  skills: { kana: "スキル", title: "Skills" },
+  cv: { kana: "シーヴィー", title: "cv" },
+  contact: { kana: "コンタクト", title: "Contact" },
+} as const;
+
+/** #cv 区块的假终端演示；真实输出是 public/cv.txt，两边措辞手动对齐 */
+/** CV 测控台：三条可「运行」的命令（输出与 worker/ 路由一一对应） */
+export const cliCmds = [
+  {
+    id: "txt",
+    cmd: "curl zm.md",
+    output: `MUELNOVA(1)         User Commands        MUELNOVA(1)
+
+NAME
+  muel — security researcher, CTF pwner, cat person
+
+SYNOPSIS
+  curl zm.md            这份纯文本简历
+  curl zm.md/cv.md      Markdown 版
+  curl zm.md/cv.pdf     PDF 版
+
+DESCRIPTION
+  THU@vul337 · PKU@pkucclab · Kimi Security Intern · 天枢Dubhe PWNer (retired)
+  Python / Go / TS / C++ · GDB / pwntools / angr
+  github.com/MuelNova · muel@nova.gal · nova.gal/blog
+
+SEE ALSO
+  在浏览器里打开同一个地址，就是你正在看的这个站。`,
+  },
+  {
+    id: "md",
+    cmd: "curl zm.md/cv.md",
+    output: `# Miao Zhao (MuelNova)
+
+Security Researcher · Retired Pwner
+THU@vul337 · PKU@pkucclab · Kimi Security Intern
+BUPT Cybersecurity (B.S.) → PKU CS (M.S.)
+
+## Main Quests
+- PwNo ★13            pwntools 扩展，开箱即用
+- NoPwnDocker ★11     一键 pwn 环境 16.04→24.04
+- Kernel-Exploit-Dojo CTF kernel 利用笔记/PoC
+
+## Elsewhere
+github.com/MuelNova · muel@nova.gal · nova.gal/blog`,
+  },
+  {
+    id: "pdf",
+    cmd: "curl zm.md/cv.pdf",
+    output: `HTTP/2 302
+location: /cv.pdf
+
+< 同一份简历，不过是排版好的 PDF。`,
+  },
+];
+
+/** 副业小节的标题（条目在 sideProjects） */
+export const sideQuestsTitle = "SIDE QUESTS";
+
+/** 零散的界面文案 */
+export const chrome = {
+  /** 页脚像素字 */
+  footerLine: "✦ MADE WITH MAGIC & HEART ✦",
+  /** 跳到主内容的无障碍链接 */
+  skipToContent: "跳到主要内容",
+};

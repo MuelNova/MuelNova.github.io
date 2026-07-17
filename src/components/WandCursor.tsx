@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useMotion } from "@/hooks/useMotion";
 
-const TRAIL_TINTS = ["#ffffff", "#ff6ec7", "#5ee7ff", "#ffe066"];
+const TRAIL_TINTS = ["#ffffff", "var(--pink)", "var(--cyan)", "var(--yellow)"];
 const SPAWN_GAP = 26; // px，鼠标每移动这么远落一粒星屑
 const MAX_PARTICLES = 18;
 

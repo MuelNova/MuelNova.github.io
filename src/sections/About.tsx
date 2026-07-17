@@ -1,9 +1,11 @@
 import Section from "@/components/Section";
-import { about } from "@/data/content";
+import CardFace, { ACCENTS } from "@/components/CardFace";
+import { about, sectionTitles } from "@/data/content";
+import type { CSSProperties } from "react";
 
 export default function About() {
   return (
-    <Section id="about" kana="アバウト" title="About">
+    <Section id="about" kana={sectionTitles.about.kana} title={sectionTitles.about.title}>
       <div className="grid gap-6 md:grid-cols-5">
         <div className="space-y-3.5 md:col-span-3">
           {about.paragraphs.map((p, i) => (
@@ -12,7 +14,8 @@ export default function About() {
             </p>
           ))}
         </div>
-        <dl className="card-cyber h-fit p-5 font-mono text-[13px] md:col-span-2">
+        <dl className="card-astra h-fit p-5 font-mono text-[13px] md:col-span-2" style={{ "--accent": ACCENTS.cyan } as CSSProperties}>
+          <CardFace />
           {about.facts.map((f) => (
             <div key={f.k} className="mb-3 last:mb-0">
               <dt className="text-xs" style={{ color: "var(--cyan)" }}>

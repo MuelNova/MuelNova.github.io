@@ -19,14 +19,25 @@
   --violet: #a487ff;
   --yellow: #ffe066;
 
-  --pink-soft: rgba(255, 110, 199, 0.14);
-  --cyan-soft: rgba(94, 231, 255, 0.12);
+  /* 各主色的 RGB 三元组：供 rgba() 拼装透明度变体；换肤时与实体色同步覆盖 */
+  --pink-rgb: 255, 110, 199;
+  --cyan-rgb: 94, 231, 255;
+  --violet-rgb: 164, 135, 255;
+  --yellow-rgb: 255, 224, 102;
+  --bg-rgb: 11, 7, 19;
+  --bg2-rgb: 21, 12, 38;
+  --bg3-rgb: 29, 17, 54;
+
+  --pink-soft: rgba(var(--pink-rgb), 0.14);
+  --cyan-soft: rgba(var(--cyan-rgb), 0.12);
   --line: rgba(244, 239, 255, 0.1);
 
   /* 浮动 Nav 占用的高度：section 用它补偿，内容才能居中在 Nav 以下的可视区 */
   --nav-h: 5.5rem;
 
-  --font-body: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Microsoft YaHei", sans-serif;
+  --font-body:
+    "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Microsoft YaHei",
+    sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", monospace;
   --font-pixel: "DotGothic16", "Zen Maru Gothic", monospace;
 
@@ -69,79 +80,175 @@
    统一由 html[data-motion="on"] 门控，一处开关全站生效
    ============================================================ */
 @keyframes float-y {
-  0%, 100% { transform: translateY(-6px); }
-  50% { transform: translateY(8px); }
+  0%,
+  100% {
+    transform: translateY(-6px);
+  }
+  50% {
+    transform: translateY(8px);
+  }
 }
 @keyframes spin-slow {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 @keyframes twinkle {
-  0%, 100% { opacity: 0.15; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1.15); }
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
 }
 @keyframes caret-blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
 }
 @keyframes scan-drift {
-  to { background-position: 0 120px; }
+  to {
+    background-position: 0 120px;
+  }
 }
 @keyframes grid-pan {
-  to { background-position: 64px 64px; }
+  to {
+    background-position: 64px 64px;
+  }
 }
 @keyframes marquee-x {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 @keyframes pop-in {
-  0% { opacity: 0; transform: scale(0.6) translateY(24px); }
-  100% { opacity: 1; transform: scale(1) translateY(0); }
+  0% {
+    opacity: 0;
+    transform: scale(0.6) translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 @keyframes rise-in {
-  0% { opacity: 0; transform: translateY(28px); }
-  100% { opacity: 1; transform: translateY(0); }
+  0% {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 @keyframes wipe-circle {
-  0% { clip-path: circle(0% at 50% 50%); }
-  100% { clip-path: circle(75% at 50% 50%); }
+  0% {
+    clip-path: circle(0% at 50% 50%);
+  }
+  100% {
+    clip-path: circle(75% at 50% 50%);
+  }
 }
 @keyframes wipe-up {
-  0% { clip-path: inset(0 0 0 0); }
-  100% { clip-path: inset(0 0 100% 0); }
+  0% {
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 100% 0);
+  }
 }
 @keyframes burst {
-  0% { transform: scale(0) rotate(0deg); opacity: 1; }
-  80% { opacity: 1; }
-  100% { transform: scale(1.6) rotate(180deg); opacity: 0; }
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.6) rotate(180deg);
+    opacity: 0;
+  }
 }
 @keyframes star-pulse {
-  0%, 100% { transform: rotate(0deg) scale(1); }
-  50% { transform: rotate(90deg) scale(1.25); }
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(90deg) scale(1.25);
+  }
 }
 @keyframes pixel-steps {
-  from { background-position-x: 0; }
-  to { background-position-x: -128px; }
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: -128px;
+  }
 }
 @keyframes ring-expand {
-  0% { transform: scale(0.2); opacity: 0.9; }
-  100% { transform: scale(2.4); opacity: 0; }
+  0% {
+    transform: scale(0.2);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
 }
 @keyframes glow-drift {
-  0%, 100% { opacity: 0.55; transform: translate(0, 0) scale(1); }
-  50% { opacity: 0.9; transform: translate(4vw, -3vh) scale(1.12); }
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translate(4vw, -3vh) scale(1.12);
+  }
 }
 
 /* ---------- 动效仅在 motion=on 时挂载 ---------- */
-html[data-motion="on"] .anim-float { animation: float-y 5s ease-in-out infinite; }
-html[data-motion="on"] .anim-spin-slow { animation: spin-slow 14s linear infinite; }
-html[data-motion="on"] .anim-twinkle { animation: twinkle 3.2s ease-in-out infinite; }
-html[data-motion="on"] .anim-caret { animation: caret-blink 1.1s steps(1) infinite; }
-html[data-motion="on"] .anim-star { animation: star-pulse 6s var(--ease-pop) infinite; }
-html[data-motion="on"] .anim-scan { animation: scan-drift 9s linear infinite; }
-html[data-motion="on"] .anim-grid { animation: grid-pan 7s linear infinite; }
+html[data-motion="on"] .anim-float {
+  animation: float-y 5s ease-in-out infinite;
+}
+html[data-motion="on"] .anim-spin-slow {
+  animation: spin-slow 14s linear infinite;
+}
+html[data-motion="on"] .anim-twinkle {
+  animation: twinkle 3.2s ease-in-out infinite;
+}
+html[data-motion="on"] .anim-caret {
+  animation: caret-blink 1.1s steps(1) infinite;
+}
+html[data-motion="on"] .anim-star {
+  animation: star-pulse 6s var(--ease-pop) infinite;
+}
+html[data-motion="on"] .anim-scan {
+  animation: scan-drift 9s linear infinite;
+}
+html[data-motion="on"] .anim-grid {
+  animation: grid-pan 7s linear infinite;
+}
 /* 轨道半区是 6 份词（见 Footer.tsx），等比放长时长维持 ~42px/s 的原速 */
-html[data-motion="on"] .anim-marquee { animation: marquee-x 130s linear infinite; }
-html[data-motion="on"] .anim-glow { animation: glow-drift 12s ease-in-out infinite; }
+html[data-motion="on"] .anim-marquee {
+  animation: marquee-x 130s linear infinite;
+}
+html[data-motion="on"] .anim-glow {
+  animation: glow-drift 12s ease-in-out infinite;
+}
 
 /* ---------- 粘滞滚动（deck 模式）：星空首屏 + 每个面板吸附成「一页一页」 ---------- */
 /* 吸附常驻（与 motion 无关），JS 磁吸接管时（html[data-paging]）才关闭原生 snap：
@@ -211,7 +318,9 @@ html[data-motion="off"] *::after {
     linear-gradient(var(--line) 1px, transparent 1px),
     linear-gradient(90deg, var(--line) 1px, transparent 1px);
   background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse 90% 70% at 50% 20%, black 20%, transparent 70%);
+  /* 全程可见，只在最底 ~24rem（Contact 尾段 → 页脚 marquee）淡出收掉；
+     别用径向椭圆：层与整页同高，椭圆在 CV 附近就提前淡出完了 */
+  mask-image: linear-gradient(180deg, black, black calc(100% - 24rem), transparent 100%);
   opacity: 0.5;
 }
 .texture-scanlines {
@@ -223,7 +332,10 @@ html[data-motion="off"] *::after {
   background-size: 100% 120px;
 }
 .texture-dots {
-  background-image: radial-gradient(rgba(244, 239, 255, 0.12) 1px, transparent 1px);
+  background-image: radial-gradient(
+    rgba(244, 239, 255, 0.12) 1px,
+    transparent 1px
+  );
   background-size: 22px 22px;
 }
 
@@ -231,20 +343,26 @@ html[data-motion="off"] *::after {
 .text-neon {
   color: var(--ink);
   text-shadow:
-    0 0 18px rgba(255, 110, 199, 0.55),
-    0 0 42px rgba(94, 231, 255, 0.3);
+    0 0 18px rgba(var(--pink-rgb), 0.55),
+    0 0 42px rgba(var(--cyan-rgb), 0.3);
 }
 .text-chroma:hover {
   text-shadow:
-    2px 0 0 rgba(255, 110, 199, 0.8),
-    -2px 0 0 rgba(94, 231, 255, 0.8);
+    2px 0 0 rgba(var(--pink-rgb), 0.8),
+    -2px 0 0 rgba(var(--cyan-rgb), 0.8);
 }
 
 /* 四角星（魔法少女元素） */
 .sparkle {
   clip-path: polygon(
-    50% 0%, 61% 39%, 100% 50%, 61% 61%,
-    50% 100%, 39% 61%, 0% 50%, 39% 39%
+    50% 0%,
+    61% 39%,
+    100% 50%,
+    61% 61%,
+    50% 100%,
+    39% 61%,
+    0% 50%,
+    39% 39%
   );
 }
 
@@ -252,15 +370,29 @@ html[data-motion="off"] *::after {
    星空首屏
    ============================================================ */
 @keyframes star-drift {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(6px, -10px); }
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(6px, -10px);
+  }
 }
 @keyframes cloud-drift {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(6%); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(6%);
+  }
 }
-html[data-motion="on"] .anim-star-drift { animation: star-drift 7s ease-in-out infinite; }
-html[data-motion="on"] .anim-cloud { animation: cloud-drift 18s ease-in-out infinite; }
+html[data-motion="on"] .anim-star-drift {
+  animation: star-drift 7s ease-in-out infinite;
+}
+html[data-motion="on"] .anim-cloud {
+  animation: cloud-drift 18s ease-in-out infinite;
+}
 
 /* 星星气泡卡：默认收起，激活时 Q 弹展开 */
 .star-card {
@@ -268,7 +400,9 @@ html[data-motion="on"] .anim-cloud { animation: cloud-drift 18s ease-in-out infi
   opacity: 0;
   pointer-events: none;
   transform: scale(0.4) translateY(8px);
-  transition: transform 0.4s var(--ease-pop), opacity 0.25s ease;
+  transition:
+    transform 0.4s var(--ease-pop),
+    opacity 0.25s ease;
   z-index: 40;
 }
 .star-card[data-open="true"] {
@@ -284,7 +418,7 @@ html[data-motion="off"] .star-card {
 .star-card-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(11, 7, 19, 0.45);
+  background: rgba(var(--bg-rgb), 0.45);
   backdrop-filter: blur(2px);
   opacity: 0;
   pointer-events: none;
@@ -302,7 +436,9 @@ html[data-motion="off"] .star-card {
   opacity: 0;
   pointer-events: none;
   transform: translate(-50%, -50%) scale(0.6);
-  transition: transform 0.4s var(--ease-pop), opacity 0.25s ease;
+  transition:
+    transform 0.4s var(--ease-pop),
+    opacity 0.25s ease;
   z-index: 70;
 }
 .star-card-mobile[data-open="true"] {
@@ -316,33 +452,145 @@ html[data-motion="off"] .star-card-mobile {
 
 /* 星座连线：虚线缓缓流动 */
 @keyframes dash-flow {
-  to { stroke-dashoffset: -90; }
+  to {
+    stroke-dashoffset: -90;
+  }
 }
 html[data-motion="on"] .constellation-line {
   animation: dash-flow 8s linear infinite;
 }
 
-/* 卡片 */
-.card-cyber {
-  background: linear-gradient(160deg, rgba(29, 17, 54, 0.85), rgba(21, 12, 38, 0.7));
+/* ============================================================
+   观测档案卡（card-astra）：一片剪下来的夜空
+   - 卡内装饰由 <CardFace /> 渲染：星尘层 + 月光柔晕（.card-skin-*）
+   - 柔晕是一团 blur(30px) 的环境光，不是扫过的金属光带
+   - 星图钉（.card-pin）骑在卡片上边界：描边 → 旋转填色发光
+   - 「光谱色」--accent 按章节统一（不是逐卡彩虹），顶部发丝边带色调
+   - :focus-visible / :focus-within 与 hover 完全同权
+   ============================================================ */
+.card-astra {
+  --accent: var(--pink);
+  position: relative;
+  background: linear-gradient(
+    160deg,
+    rgba(var(--bg3-rgb), 0.85),
+    rgba(var(--bg2-rgb), 0.7)
+  );
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-top-color: color-mix(in srgb, var(--accent) 32%, transparent);
+  border-radius: 14px;
   backdrop-filter: blur(6px);
-  transition: transform 0.35s var(--ease-pop), border-color 0.25s ease, box-shadow 0.35s ease;
+  transition:
+    transform 0.25s var(--ease-out),
+    border-color 0.25s ease,
+    box-shadow 0.3s ease;
 }
-html[data-motion="on"] .card-cyber:hover {
-  transform: translateY(-6px);
-  border-color: rgba(255, 110, 199, 0.45);
-  box-shadow: 0 12px 40px -12px rgba(255, 110, 199, 0.35);
+/* 卡内装饰的裁剪壳（卡片本体不裁剪，图钉才能骑缝） */
+.card-skin {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.card-skin > span {
+  position: absolute;
+  inset: 0;
+}
+/* 星尘层 */
+.card-skin-dust {
+  background-image:
+    radial-gradient(1px 1px at 18% 24%, rgba(255, 255, 255, 0.45), transparent),
+    radial-gradient(1px 1px at 74% 18%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(
+      1.5px 1.5px at 62% 66%,
+      rgba(255, 255, 255, 0.36),
+      transparent
+    ),
+    radial-gradient(1px 1px at 32% 78%, rgba(255, 255, 255, 0.24), transparent);
+  opacity: 0.35;
+  transition: opacity 0.3s ease;
+}
+/* 月光柔晕：顶部一团光谱色的环境光，缓缓呼吸漂移 */
+.card-skin-orb {
+  inset: -45% -20% auto -20%;
+  height: 90%;
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--accent) 26%, transparent),
+    transparent 62%
+  );
+  filter: blur(30px);
+  opacity: 0.35;
+  transition: opacity 0.35s ease;
+}
+@keyframes orb-drift {
+  0%,
+  100% {
+    transform: translate(-2%, 0);
+  }
+  50% {
+    transform: translate(2%, 8%);
+  }
+}
+html[data-motion="on"] .card-skin-orb {
+  animation: orb-drift 10s ease-in-out infinite;
+}
+.card-astra:hover .card-skin-dust,
+.card-astra:focus-visible .card-skin-dust,
+.card-astra:focus-within .card-skin-dust {
+  opacity: 0.8;
+}
+.card-astra:hover .card-skin-orb,
+.card-astra:focus-visible .card-skin-orb,
+.card-astra:focus-within .card-skin-orb {
+  opacity: 0.7;
+}
+/* 可交互卡（链接）才有位移/描边/投影——非交互卡不给「可以点击」的错觉 */
+.card-astra-link:hover,
+.card-astra-link:focus-visible {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow: 0 14px 44px -16px
+    color-mix(in srgb, var(--accent) 40%, transparent);
 }
 
-/* 终端窗口 */
-.term-window {
-  background: rgba(9, 5, 18, 0.92);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  font-family: var(--font-mono);
-  box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.8);
+/* 星图钉：骑在卡片上边界 */
+.card-pin {
+  position: absolute;
+  top: -7px;
+  left: 18px;
+  z-index: 1;
+  width: 13px;
+  height: 13px;
+  fill: transparent;
+  stroke: var(--accent, var(--pink));
+  stroke-width: 1.1;
+  opacity: 0.55;
+  transition:
+    transform 0.35s var(--ease-pop),
+    opacity 0.25s ease,
+    fill 0.25s ease,
+    filter 0.25s ease;
+}
+.card-astra:hover .card-pin,
+.card-astra:focus-visible .card-pin,
+.card-astra:focus-within .card-pin {
+  fill: var(--accent, var(--pink));
+  opacity: 1;
+  transform: rotate(45deg);
+  filter: drop-shadow(0 0 5px var(--accent, var(--pink)));
+}
+
+/* 技能 chip：hover 只亮边与字，不加多余动效 */
+.chip-star {
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+.chip-star:hover {
+  border-color: color-mix(in srgb, var(--pink) 45%, transparent);
+  color: var(--ink);
 }
 
 /* 链接下划线动效 */
@@ -369,7 +617,9 @@ html[data-motion="on"] .card-cyber:hover {
 }
 
 @media (max-width: 640px) {
-  .texture-grid { background-size: 44px 44px; }
+  .texture-grid {
+    background-size: 44px 44px;
+  }
 }
 
 /* ============================================================
@@ -377,8 +627,15 @@ html[data-motion="on"] .card-cyber:hover {
    明灭深度各不相同，夜空因此有「远近」
    ============================================================ */
 @keyframes star-twinkle {
-  0%, 100% { opacity: var(--o-min); transform: scale(1); }
-  50% { opacity: var(--o-max); transform: scale(1.25); }
+  0%,
+  100% {
+    opacity: var(--o-min);
+    transform: scale(1);
+  }
+  50% {
+    opacity: var(--o-max);
+    transform: scale(1.25);
+  }
 }
 .star-dust {
   position: absolute;
@@ -395,38 +652,80 @@ html[data-motion="on"] .card-cyber:hover {
    流星：大部分时间藏在屏外，每个周期只掠过一小段
    ============================================================ */
 @keyframes shooting-star-a {
-  0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(-26deg); }
-  0.8% { opacity: 0.95; }
-  5.5% { opacity: 0.95; }
-  7.5% { opacity: 0; transform: translate3d(-52vw, 24vh, 0) rotate(-26deg); }
-  100% { opacity: 0; transform: translate3d(-52vw, 24vh, 0) rotate(-26deg); }
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(-26deg);
+  }
+  0.8% {
+    opacity: 0.95;
+  }
+  5.5% {
+    opacity: 0.95;
+  }
+  7.5% {
+    opacity: 0;
+    transform: translate3d(-52vw, 24vh, 0) rotate(-26deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-52vw, 24vh, 0) rotate(-26deg);
+  }
 }
 @keyframes shooting-star-b {
-  0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(-18deg); }
-  0.6% { opacity: 0.8; }
-  4% { opacity: 0.8; }
-  5.5% { opacity: 0; transform: translate3d(38vw, 14vh, 0) rotate(-18deg); }
-  100% { opacity: 0; transform: translate3d(38vw, 14vh, 0) rotate(-18deg); }
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(-18deg);
+  }
+  0.6% {
+    opacity: 0.8;
+  }
+  4% {
+    opacity: 0.8;
+  }
+  5.5% {
+    opacity: 0;
+    transform: translate3d(38vw, 14vh, 0) rotate(-18deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(38vw, 14vh, 0) rotate(-18deg);
+  }
 }
 .shooting-star {
   position: absolute;
   height: 2px;
   border-radius: 9999px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 244, 252, 0.9));
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0),
+    rgba(255, 244, 252, 0.9)
+  );
   filter: drop-shadow(0 0 6px rgba(255, 230, 250, 0.8));
   opacity: 0;
   pointer-events: none;
 }
-html[data-motion="on"] .shooting-star-a { animation: shooting-star-a 19s linear 7s infinite; }
-html[data-motion="on"] .shooting-star-b { animation: shooting-star-b 31s linear 16s infinite; }
-html[data-motion="off"] .shooting-star { display: none; }
+html[data-motion="on"] .shooting-star-a {
+  animation: shooting-star-a 19s linear 7s infinite;
+}
+html[data-motion="on"] .shooting-star-b {
+  animation: shooting-star-b 31s linear 16s infinite;
+}
+html[data-motion="off"] .shooting-star {
+  display: none;
+}
 
 /* ============================================================
    魔法棒光标：主星 lerp 跟随，星屑粒子沿轨迹散落
    ============================================================ */
 @keyframes sparkle-trail {
-  0% { opacity: 0.95; transform: scale(1) rotate(0deg); }
-  100% { opacity: 0; transform: scale(0.1) rotate(140deg) translateY(-16px); }
+  0% {
+    opacity: 0.95;
+    transform: scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.1) rotate(140deg) translateY(-16px);
+  }
 }
 .wand-layer {
   position: absolute;
@@ -440,9 +739,8 @@ html[data-motion="off"] .shooting-star { display: none; }
   left: 0;
   top: 0;
   will-change: transform;
-  filter:
-    drop-shadow(0 0 6px rgba(255, 110, 199, 0.9))
-    drop-shadow(0 0 16px rgba(255, 110, 199, 0.45));
+  filter: drop-shadow(0 0 6px rgba(var(--pink-rgb), 0.9))
+    drop-shadow(0 0 16px rgba(var(--pink-rgb), 0.45));
 }
 .wand-trail-particle {
   position: absolute;
@@ -453,14 +751,20 @@ html[data-motion="off"] .shooting-star { display: none; }
 /* ============================================================
    导航：星图罗盘
    ============================================================ */
-/* 外壳两态：浮在星空上（无边无底）⇆ 滚过首屏凝聚成玻璃仪器（宽度自适应内容） */
+/* 外壳两态：浮在星空上（无边无底、全宽贴边）⇆ 滚过首屏凝聚成玻璃仪器（宽度自适应内容）。
+   注意：width 不要进这个过渡列表——两态宽度是内禀尺寸（fit-content / 撑满全宽），
+   插值不可靠；且宽度补间与这些属性并行会把链接挤换行，肉眼是「高一下又矮回去」。
+   铺 ⇆ 拢的位移由 Nav.tsx 对子块做的 FLIP 负责。 */
 .nav-shell {
   transition:
     margin 0.5s var(--ease-out),
     padding 0.4s ease,
+    gap 0.4s ease,
     background-color 0.4s ease,
     border-color 0.4s ease,
-    box-shadow 0.4s ease;
+    box-shadow 0.4s ease,
+    backdrop-filter 0.4s ease,
+    -webkit-backdrop-filter 0.4s ease;
 }
 /* 浮在天上时，文字压一层柔影保证在亮云/月亮上也可读 */
 .nav-over-sky a,
@@ -496,5 +800,5 @@ a:focus-visible .nav-star.nav-star-active {
   fill: var(--pink);
   stroke: var(--pink);
   opacity: 1;
-  filter: drop-shadow(0 0 5px rgba(255, 110, 199, 0.8));
+  filter: drop-shadow(0 0 5px rgba(var(--pink-rgb), 0.8));
 }

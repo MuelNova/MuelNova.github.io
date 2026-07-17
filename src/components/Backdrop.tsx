@@ -17,11 +17,11 @@ export default function Backdrop() {
       {/* 极光晕（很淡） */}
       <div
         className="anim-glow absolute -left-40 -top-40 h-[40rem] w-[40rem] rounded-full opacity-50"
-        style={{ background: "radial-gradient(circle, rgba(255,110,199,.10), transparent 62%)" }}
+        style={{ background: "radial-gradient(circle, rgba(var(--pink-rgb),.10), transparent 62%)" }}
       />
       <div
         className="anim-glow absolute -bottom-48 -right-40 h-[36rem] w-[36rem] rounded-full opacity-40"
-        style={{ background: "radial-gradient(circle, rgba(94,231,255,.08), transparent 62%)", animationDelay: "-6s" }}
+        style={{ background: "radial-gradient(circle, rgba(var(--cyan-rgb),.08), transparent 62%)", animationDelay: "-6s" }}
       />
       {/* 网格（很淡，无动画） */}
       <div className="texture-grid absolute inset-0" />

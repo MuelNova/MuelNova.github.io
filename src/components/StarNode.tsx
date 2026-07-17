@@ -16,10 +16,10 @@ function useIsMobile() {
 }
 
 const COLORS: Record<Star["color"], { core: string; glow: string }> = {
-  pink: { core: "#ff6ec7", glow: "rgba(255,110,199," },
-  cyan: { core: "#5ee7ff", glow: "rgba(94,231,255," },
-  violet: { core: "#a487ff", glow: "rgba(164,135,255," },
-  yellow: { core: "#ffe066", glow: "rgba(255,224,102," },
+  pink: { core: "var(--pink)", glow: "rgba(var(--pink-rgb)," },
+  cyan: { core: "var(--cyan)", glow: "rgba(var(--cyan-rgb)," },
+  violet: { core: "var(--violet)", glow: "rgba(var(--violet-rgb)," },
+  yellow: { core: "var(--yellow)", glow: "rgba(var(--yellow-rgb)," },
 };
 
 /** 单颗星：按钮语义，hover/focus/tap 展开气泡卡。 */
@@ -149,7 +149,7 @@ function CardBody({ star, color }: { star: Star; color: string }) {
     <div
       className="w-[78vw] max-w-xs rounded-2xl border p-4 backdrop-blur-md sm:w-72 sm:max-w-none"
       style={{
-        background: "rgba(20,10,36,.88)",
+        background: "rgba(var(--bg3-rgb),.88)",
         borderColor: color,
         boxShadow: `0 8px 40px -8px ${color}55, 0 0 0 1px ${color}22`,
       }}

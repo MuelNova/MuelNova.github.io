@@ -1,9 +1,11 @@
 import Section from "@/components/Section";
-import { projects, sideProjects } from "@/data/content";
+import CardFace, { ACCENTS } from "@/components/CardFace";
+import { projects, sectionTitles, sideProjects, sideQuestsTitle } from "@/data/content";
+import type { CSSProperties } from "react";
 
 export default function Projects() {
   return (
-    <Section id="projects" kana="プロジェクト" title="Projects">
+    <Section id="projects" kana={sectionTitles.projects.kana} title={sectionTitles.projects.title}>
       {/* 主线：紧凑网格 */}
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((p) => (
@@ -12,9 +14,11 @@ export default function Projects() {
               href={p.url}
               target="_blank"
               rel="noreferrer"
-              className="card-cyber group flex h-full flex-col p-4 no-underline"
+              className="card-astra card-astra-link group flex h-full flex-col p-4 no-underline"
+              style={{ "--accent": ACCENTS.pink } as CSSProperties}
               aria-label={`${p.name} — ${p.desc}（GitHub，新窗口打开）`}
             >
+              <CardFace />
               <div className="flex items-center justify-between">
                 <span className="font-mono text-xs" style={{ color: "var(--cyan)" }}>
                   {p.tag}
@@ -22,7 +26,7 @@ export default function Projects() {
                 {p.star && <span aria-hidden="true" className="sparkle h-3.5 w-3.5" style={{ background: "var(--yellow)" }} />}
               </div>
               <h3 className="mt-2 break-words font-mono text-[15px] font-bold text-white group-hover:underline">
-                {p.name} <span aria-hidden="true">↗</span>
+                {p.name} <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-0.5">↗</span>
               </h3>
               <p className="mt-1.5 flex-1 text-[13px] leading-snug" style={{ color: "var(--muted)" }}>
                 {p.desc}
@@ -37,7 +41,7 @@ export default function Projects() {
 
       {/* 副业：两列 compact 行 */}
       <h3 className="mt-8 font-pixel text-xs tracking-[0.35em]" style={{ color: "var(--pink)" }}>
-        SIDE QUESTS <span aria-hidden="true">✦</span>
+        {sideQuestsTitle} <span aria-hidden="true">✦</span>
       </h3>
       <ul className="mt-3 grid gap-x-8 gap-y-1.5 sm:grid-cols-2">
         {sideProjects.map((p) => (

@@ -1,15 +1,13 @@
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { ReactNode } from "react";
+import { MotionCtx } from "@/hooks/useMotion";
 
 /**
- * 动效总开关：
+ * 动效总开关 Provider：
  * - 默认跟随 OS 的 prefers-reduced-motion
  * - 用户可在页面上手动切换，选择持久化到 localStorage
  * - 结果写到 <html data-motion="on|off">，CSS 统一门控
  */
-
-type MotionCtx = { motionOn: boolean; toggle: () => void };
-const Ctx = createContext<MotionCtx>({ motionOn: true, toggle: () => {} });
 
 const KEY = "zm-motion";
 
@@ -43,7 +41,5 @@ export function MotionProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
-  return <Ctx.Provider value={{ motionOn, toggle }}>{children}</Ctx.Provider>;
+  return <MotionCtx.Provider value={{ motionOn, toggle }}>{children}</MotionCtx.Provider>;
 }
-
-export const useMotion = () => useContext(Ctx);

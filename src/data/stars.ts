@@ -1,10 +1,13 @@
 /**
  * stars.ts —— 星空层的数据。
  * 每颗星 = 夜空里的一个「你」：大小、颜色、展开后的内容。
- * 与 content.ts 同源改写；想调整夜空只改这里。
- * 注意：x/y/mx/my 现在会被 skyLayout.dailyLayout 按「当日种子」覆盖（每日星象），
+ * 联系方式等已有唯一定义的数据直接引用 content.ts（单源，别复制）；
+ * 其余与 content.ts 同源改写；想调整夜空只改这里。
+ * 注意：x/y/mx/my 会被 skyLayout.randomLayout 当场覆盖（每访星象，每次刷新换位置），
  * 这里保留的坐标仅作内容锚点与生成兜底参考；想加星直接往数组里加，位置不用管。
  */
+
+import { socials } from "@/data/content";
 
 export type StarContent =
   | { kind: "text"; title: string; body: string; foot?: string }
@@ -44,7 +47,7 @@ export const heroStar = {
   kana: "ミュエル・ノヴァ",
   name: "Muel Nova",
   role: "Security Researcher · Anime Enthusiast (Retired)",
-  line: "简单恰点米",
+  line: "Designed by Kimi K3 · Built by Muel Nova",
   hint: "✦ 探索这片星空，或往下滑",
 };
 
@@ -66,7 +69,7 @@ export const stars: Star[] = [
     content: {
       kind: "text",
       title: "Miao Zhao · muir",
-      body: "THU@vul337 \nPKU@pkucclab \nKimi Security Intern\n",
+      body: "vul337 @ THU \npkucclab @ PKU \nSecurity Intern @ Moonshot AI\n",
       foot: "location: Isekai",
     },
   },
@@ -214,23 +217,8 @@ export const stars: Star[] = [
     content: {
       kind: "links",
       title: "找到我",
-      links: [
-        {
-          label: "GitHub",
-          handle: "@MuelNova",
-          url: "https://github.com/MuelNova",
-        },
-        {
-          label: "Blog",
-          handle: "nova.gal/blog",
-          url: "https://nova.gal/blog/",
-        },
-        {
-          label: "Email",
-          handle: "muel@nova.gal",
-          url: "mailto:muel@nova.gal",
-        },
-      ],
+      // 直接复用 content.ts 的 socials（GitHub/Blog/Twitter/Email），不再自备一份
+      links: socials,
     },
   },
   {

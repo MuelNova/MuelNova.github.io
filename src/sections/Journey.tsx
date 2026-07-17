@@ -1,5 +1,7 @@
 import Section from "@/components/Section";
-import { interests, milestones } from "@/data/content";
+import CardFace from "@/components/CardFace";
+import { interests, milestones, sectionTitles } from "@/data/content";
+import type { CSSProperties } from "react";
 
 const accent: Record<string, string> = {
   pink: "var(--pink)",
@@ -10,16 +12,12 @@ const accent: Record<string, string> = {
 
 export default function Journey() {
   return (
-    <Section id="journey" kana="タビジ" title="Journey & Interests">
+    <Section id="journey" kana={sectionTitles.journey.kana} title={sectionTitles.journey.title}>
       {/* 时间线（横向三格） */}
-      <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <ol className="relative grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {milestones.map((m) => (
-          <li key={m.title} className="card-cyber relative p-5">
-            <span
-              aria-hidden="true"
-              className="sparkle absolute -top-2 left-5 h-4 w-4"
-              style={{ background: accent[m.color], boxShadow: `0 0 10px ${accent[m.color]}` }}
-            />
+          <li key={m.title} className="card-astra relative p-5" style={{ "--accent": accent[m.color] } as CSSProperties}>
+            <CardFace />
             <p className="mt-2 font-mono text-xs tracking-widest" style={{ color: accent[m.color] }}>
               {m.year}
             </p>
@@ -32,7 +30,8 @@ export default function Journey() {
       {/* 研究兴趣 */}
       <div className="mt-8 grid gap-5 sm:grid-cols-3">
         {interests.map((it) => (
-          <article key={it.title} className="rounded-xl border p-5" style={{ borderColor: "var(--line)" }}>
+          <article key={it.title} className="card-astra p-5" style={{ "--accent": accent[it.accent] } as CSSProperties}>
+            <CardFace />
             <p aria-hidden="true" className="text-xl" style={{ color: accent[it.accent] }}>
               {it.icon}
             </p>
