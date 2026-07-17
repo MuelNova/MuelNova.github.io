@@ -450,3 +450,51 @@ html[data-motion="off"] .shooting-star { display: none; }
   will-change: transform, opacity;
 }
 
+/* ============================================================
+   导航：星图罗盘
+   ============================================================ */
+/* 外壳两态：浮在星空上（无边无底）⇆ 滚过首屏凝聚成玻璃仪器（宽度自适应内容） */
+.nav-shell {
+  transition:
+    margin 0.5s var(--ease-out),
+    padding 0.4s ease,
+    background-color 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+/* 浮在天上时，文字压一层柔影保证在亮云/月亮上也可读 */
+.nav-over-sky a,
+.nav-over-sky button {
+  text-shadow: 0 1px 14px rgba(5, 2, 10, 0.9);
+}
+
+/* 链接前的四角星标：描边（默认）→ 旋转亮起（hover）→ 实心辉光（当前章节） */
+.nav-star {
+  width: 9px;
+  height: 9px;
+  flex: none;
+  fill: transparent;
+  stroke: var(--muted);
+  stroke-width: 1.1;
+  opacity: 0.4;
+  transition:
+    transform 0.35s var(--ease-pop),
+    opacity 0.25s ease,
+    fill 0.25s ease,
+    stroke 0.25s ease,
+    filter 0.25s ease;
+}
+a:hover .nav-star,
+a:focus-visible .nav-star {
+  opacity: 1;
+  transform: rotate(45deg) scale(1.15);
+  stroke: var(--cyan);
+}
+.nav-star.nav-star-active,
+a:hover .nav-star.nav-star-active,
+a:focus-visible .nav-star.nav-star-active {
+  fill: var(--pink);
+  stroke: var(--pink);
+  opacity: 1;
+  filter: drop-shadow(0 0 5px rgba(255, 110, 199, 0.8));
+}
