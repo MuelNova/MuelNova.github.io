@@ -3,12 +3,17 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import StarSky from "@/components/StarSky";
 import StarNode from "@/components/StarNode";
-import { constellationLines, heroStar, stars } from "@/data/stars";
+import WandCursor from "@/components/WandCursor";
+import { constellationLines, heroStar, stars as starContent } from "@/data/stars";
+import { dailyLayout } from "@/data/skyLayout";
 import { useMotion } from "@/hooks/useMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const LINES = constellationLines(stars);
+/* 每日星象：坐标按当日种子生成（stars.ts 里的内容不变，位置每天换） */
+const LAYOUT = dailyLayout(starContent);
+const STARS = starContent.map((s) => ({ ...s, ...LAYOUT[s.id] }));
+const LINES = constellationLines(STARS);
 const LINE_COLORS: Record<string, string> = {
   core: "rgba(255,110,199,.5)",
   build: "rgba(255,224,102,.45)",
@@ -25,6 +30,8 @@ export default function StarField() {
   const rootRef = useRef<HTMLDivElement>(null);
   const skyRef = useRef<HTMLDivElement>(null);
   const anyOpen = openId !== null;
+  // 展开某颗星时，它所在的整个星座亮起来，其余连线退到幕后
+  const activeGroup = STARS.find((s) => s.id === openId)?.constellation ?? null;
 
   // 滚动推进：星野轻微视差 + 星星向后退，营造「穿过星空」
   useEffect(() => {
@@ -80,24 +87,30 @@ export default function StarField() {
         </p>
       </div>
 
-      {/* 星座连线（移动端星星收拢，连线隐藏） */}
+      {/* 星座连线：按组着色；有星展开时，同组连线亮起（移动端星星收拢，连线隐藏） */}
       <svg className="star-layer absolute inset-0 hidden h-full w-full sm:block" style={{ zIndex: 5 }} aria-hidden="true">
-        {LINES.map((l) => (
-          <line
-            key={l.key}
-            x1={`${l.x1}%`} y1={`${l.y1}%`} x2={`${l.x2}%`} y2={`${l.y2}%`}
-            stroke={Object.values(LINE_COLORS).find((_, i) => i === 0)}
-            strokeWidth="1"
-            strokeDasharray="3 6"
-            className="constellation-line"
-            style={{ stroke: "rgba(244,239,255,.18)" }}
-          />
-        ))}
+        {LINES.map((l) => {
+          const lit = anyOpen && l.group === activeGroup;
+          return (
+            <line
+              key={l.key}
+              x1={`${l.x1}%`} y1={`${l.y1}%`} x2={`${l.x2}%`} y2={`${l.y2}%`}
+              stroke={LINE_COLORS[l.group] ?? "rgba(244,239,255,.45)"}
+              strokeWidth={lit ? 1.4 : 1}
+              strokeDasharray="3 6"
+              className="constellation-line"
+              style={{
+                opacity: anyOpen ? (lit ? 1 : 0.25) : 0.85,
+                transition: "opacity .35s ease, stroke-width .35s ease",
+              }}
+            />
+          );
+        })}
       </svg>
 
       {/* 星星层（气泡卡需盖过中央标题层） */}
       <div className="star-layer absolute inset-0" style={{ zIndex: 30 }}>
-        {stars.map((s) => (
+        {STARS.map((s) => (
           <StarNode
             key={s.id}
             star={s}
@@ -113,6 +126,9 @@ export default function StarField() {
         <p className="font-pixel text-[11px] tracking-[0.3em]" style={{ color: "var(--faint)" }}>{heroStar.hint}</p>
         <span aria-hidden="true" className="sparkle anim-twinkle mx-auto mt-2 block h-3 w-3" style={{ background: "var(--pink)" }} />
       </div>
+
+      {/* 魔法棒光标（仅鼠标 + 动效开时挂载，纯装饰） */}
+      <WandCursor />
     </div>
   );
 }
