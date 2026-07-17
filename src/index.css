@@ -139,6 +139,23 @@ html[data-motion="on"] .anim-grid { animation: grid-pan 7s linear infinite; }
 html[data-motion="on"] .anim-marquee { animation: marquee-x 22s linear infinite; }
 html[data-motion="on"] .anim-glow { animation: glow-drift 12s ease-in-out infinite; }
 
+/* ---------- 粘滞滚动（deck 模式）：星空首屏 + 每个面板吸顶成「一页一页」 ---------- */
+/* 只在 motion=on 时启用。高于一屏的 section 内部仍可自由滚动（snap overflow），页脚自然停靠 */
+html[data-motion="on"] {
+  scroll-snap-type: y mandatory;
+  /* 给浮动 Nav 留位；顺带修正锚点跳转被 Nav 遮挡 */
+  scroll-padding-top: 5.5rem;
+}
+html[data-motion="on"] #sky,
+html[data-motion="on"] .deck-panel {
+  scroll-snap-align: start;
+  scroll-snap-stop: always; /* 快速滑也只翻一页 */
+}
+html[data-motion="on"] footer {
+  scroll-snap-align: end;
+  scroll-snap-stop: normal;
+}
+
 /* 滚动显现：默认隐藏，.in-view 时进入（无 JS 时直接可见，见 .no-js 兜底） */
 .reveal {
   opacity: 0;
