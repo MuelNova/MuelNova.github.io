@@ -1,6 +1,7 @@
 import Backdrop from "@/components/Backdrop";
 import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
+import { useDeckPaging } from "@/hooks/useDeckPaging";
 import { useRevealAll } from "@/hooks/useInView";
 import About from "@/sections/About";
 import CliSection from "@/sections/CliSection";
@@ -12,6 +13,7 @@ import StarField from "@/sections/StarField";
 
 export default function Home() {
   const rootRef = useRevealAll<HTMLDivElement>();
+  useDeckPaging();
 
   return (
     <div ref={rootRef} className="relative">

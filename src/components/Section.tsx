@@ -16,7 +16,7 @@ export default function Section({
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className="deck-panel relative mx-auto flex min-h-[100svh] w-full max-w-5xl flex-col justify-center px-5 py-16"
+      className="deck-panel relative mx-auto flex min-h-[100svh] w-full max-w-5xl flex-col justify-center px-5 pb-8 pt-[calc(var(--nav-h)+2rem)]"
     >
       <p aria-hidden="true" className="reveal font-pixel text-sm tracking-[0.4em]" style={{ color: "var(--pink)" }}>
         {kana}

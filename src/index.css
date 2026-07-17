@@ -23,6 +23,9 @@
   --cyan-soft: rgba(94, 231, 255, 0.12);
   --line: rgba(244, 239, 255, 0.1);
 
+  /* 浮动 Nav 占用的高度：section 用它补偿，内容才能居中在 Nav 以下的可视区 */
+  --nav-h: 5.5rem;
+
   --font-body: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Microsoft YaHei", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", monospace;
   --font-pixel: "DotGothic16", "Zen Maru Gothic", monospace;
@@ -140,19 +143,25 @@ html[data-motion="on"] .anim-grid { animation: grid-pan 7s linear infinite; }
 html[data-motion="on"] .anim-marquee { animation: marquee-x 130s linear infinite; }
 html[data-motion="on"] .anim-glow { animation: glow-drift 12s ease-in-out infinite; }
 
-/* ---------- 粘滞滚动（deck 模式）：星空首屏 + 每个面板吸顶成「一页一页」 ---------- */
-/* 只在 motion=on 时启用。高于一屏的 section 内部仍可自由滚动（snap overflow），页脚自然停靠 */
-html[data-motion="on"] {
+/* ---------- 粘滞滚动（deck 模式）：星空首屏 + 每个面板吸附成「一页一页」 ---------- */
+/* 吸附常驻（与 motion 无关），JS 磁吸接管时（html[data-paging]）才关闭原生 snap：
+   · motion=on 且桌面端：useDeckPaging 磁吸（滑动跟手，停稳后 GSAP 短补间）
+   · motion=on 触屏端：原生 mandatory snap（平滑收尾）
+   · still（motion=off）：原生 mandatory snap，但 scroll-behavior=auto → 瞬时吸附、无动画
+   吸附点与视口上沿对齐，Nav 高度由 section 内边距补偿（--nav-h）；
+   高于一屏的 section 内部可自由滚动，页脚自然停靠 */
+html:not([data-paging]) {
   scroll-snap-type: y mandatory;
-  /* 给浮动 Nav 留位；顺带修正锚点跳转被 Nav 遮挡 */
-  scroll-padding-top: 5.5rem;
 }
-html[data-motion="on"] #sky,
-html[data-motion="on"] .deck-panel {
+html[data-paging] {
+  scroll-behavior: auto;
+}
+#sky,
+.deck-panel {
   scroll-snap-align: start;
   scroll-snap-stop: always; /* 快速滑也只翻一页 */
 }
-html[data-motion="on"] footer {
+footer {
   scroll-snap-align: end;
   scroll-snap-stop: normal;
 }
@@ -440,3 +449,4 @@ html[data-motion="off"] .shooting-star { display: none; }
   animation: sparkle-trail 0.85s ease-out forwards;
   will-change: transform, opacity;
 }
+
