@@ -20,7 +20,7 @@ export const about = {
   ],
   facts: [
     { k: "work", v: "Moonshot AI (Intern)" },
-    { k: "research", v: "THU@vul337 · PKU@pkucclab" },
+    { k: "research", v: "vul337 @ THU · pkucclab @ PKU" },
     { k: "education", v: "PKU CS (M.S.) · BUPT Cybersecurity (B.S.)" },
     { k: "ctf", v: "天枢Dubhe — PWNer (retired)" },
   ],
@@ -29,14 +29,14 @@ export const about = {
 export const milestones = [
   {
     year: "now",
-    title: "Kimi Security Intern",
+    title: "Security Intern",
     desc: "Moonshot AI",
     color: "yellow",
   },
   {
     year: "now",
     title: "Security research",
-    desc: "vul337 @ THU · CCLab @ PKU — memory safety",
+    desc: "vul337 @ THU · pkucclab @ PKU",
     color: "pink",
   },
   {
@@ -243,7 +243,7 @@ SYNOPSIS
   curl zm.md/cv.pdf     PDF 版
 
 DESCRIPTION
-  THU@vul337 · PKU@pkucclab · Kimi Security Intern · 天枢Dubhe PWNer (retired)
+  vul337 @ THU · pkucclab @ PKU · Security Intern @ Moonshot AI· 天枢Dubhe PWNer (retired)
   Python / Go / TS / C++ · GDB / pwntools / angr
   github.com/MuelNova · muel@nova.gal · nova.gal/blog
 
@@ -256,7 +256,7 @@ SEE ALSO
     output: `# Miao Zhao (MuelNova)
 
 Security Researcher · Retired Pwner
-THU@vul337 · PKU@pkucclab · Kimi Security Intern
+vul337 @ THU · pkucclab @ PKU · Security Intern @ Moonshot AI
 BUPT Cybersecurity (B.S.) → PKU CS (M.S.)
 
 ## Main Quests
@@ -273,7 +273,7 @@ github.com/MuelNova · muel@nova.gal · nova.gal/blog`,
     output: `HTTP/2 302
 location: /cv.pdf
 
-< 同一份简历，不过是排版好的 PDF。`,
+< NOT IMPLEMENTED。`,
   },
 ];
 
