@@ -1,0 +1,58 @@
+[1m[38;5;213m
+  ███╗   ███╗██╗   ██╗███████╗██╗        ███╗   ██╗ ██████╗ ██╗   ██╗ █████╗
+  ████╗ ████║██║   ██║██╔════╝██║        ████╗  ██║██╔═══██╗██║   ██║██╔══██╗
+  ██╔████╔██║██║   ██║█████╗  ██║        ██╔██╗ ██║██║   ██║██║   ██║███████║
+  ██║╚██╔╝██║██║   ██║██╔══╝  ██║        ██║╚██╗██║██║   ██║╚██╗ ██╔╝██╔══██║
+  ██║ ╚═╝ ██║╚██████╔╝███████╗███████╗   ██║ ╚████║╚██████╔╝ ╚████╔╝ ██║  ██║
+  ╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚══════╝   ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝
+[0m
+  MUELNOVA(1)                   User Commands                  MUELNOVA(1)
+
+  [1mNAME[0m
+      muel — security researcher, retired pwner, cat person
+      (muir / Miao Zhao · ミュエル・ノヴァ)
+
+  [1mSYNOPSIS[0m
+      [38;5;87mcurl zm.md[0m              这份纯文本简历（你正在看）
+      [38;5;87mcurl zm.md/cv.md[0m        Markdown 版本
+      [38;5;87mcurl -L zm.md/pdf[0m       PDF 版本（302 重定向）
+      浏览器打开 [4mhttps://zm.md[0m   主页本体 ✦
+
+  [1mDESCRIPTION[0m
+      · Security Researcher — THU@vul337 & PKU@pkucclab
+      · 北京大学计算机学院 硕士在读（BUPT 网络空间安全 本科）
+      · PWNer @ 天枢Dubhe (retired) — 强网拟态 / 西湖论剑 / HGAME
+      · 方向：内存安全、kernel pwn、调试与工具链
+
+  [1mPROJECTS[0m
+      PwNo ★13               pwntools 扩展，开箱即用，完整类型注解
+      NoPwnDocker ★11        一键 pwn 环境（Ubuntu 16.04 → 24.04）
+      Kernel-Exploit-Dojo    CTF kernel 利用：笔记 / PoC / writeup
+      glibc-all-in-one-gdb-debug  自动为 gdb attach 进程加载调试符号
+      NoKrnDocker            kernel 调试 docker
+      pastebin-worker        Cloudflare Workers 上的 pastebin + CLI
+
+  [1mSIDE QUESTS[0m
+      sts2_typing     杀戮尖塔2 联机聊天 mod (C#)
+      FRU-Sim         FFXIV 副本模拟器 (GDScript)
+      rhinebar        zebar / GlazeWM 任务栏 (ricing)
+      ani             一站式弹幕追番平台 (Kotlin)
+      beancount-gs    beancount 记账 API + 前端 (Go)
+
+  [1mENVIRONMENT[0m
+      LANG        Python, Go, TypeScript, C++, Rust (learning)
+      TOOLS       GDB, pwntools, angr
+      OS          Linux, Arch
+      WEB         Astro, Tailwind, React, Cloudflare Workers
+
+  [1mFILES[0m
+      [4mgithub.com/MuelNova[0m
+      [4mnova.gal/blog[0m          ネコのメモ帳
+      [4mx.com/NovaNoir_[0m
+      muel@nova.gal
+      GPG  6C4F 47DB A3A8 EB3B 5670 172A 6AC1 E2FC FE4A A441
+
+  [1mSEE ALSO[0m
+      同一个域名，两种打开方式 —— Hacking 4 fun!
+
+zm.md(1)                      2026                         MUELNOVA(1)

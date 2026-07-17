@@ -1,0 +1,11 @@
+name = "zm-md"
+main = "index.js"
+compatibility_date = "2025-11-01"
+
+# Workers Static Assets：把 Vite 构建产物挂上来
+[assets]
+directory = "../dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+# 关键：让 Worker 先跑，由它决定返回简历还是静态站（默认是静态资源优先，/ 永远不会进 Worker）
+run_worker_first = true
