@@ -49,6 +49,7 @@ export const about = {
 };
 
 export const milestones = [
+  { year: "now", title: "Kimi Security Intern", desc: "Moonshot AI（月之暗面）", color: "yellow" },
   { year: "now", title: "Security research", desc: "vul337 @ THU · CCLab @ PKU — memory safety", color: "pink" },
   { year: "2025", title: "PKU CS, M.S.", desc: "Graduate school, School of Computer Science", color: "cyan" },
   { year: "2021–25", title: "BUPT · CTF PWNer", desc: "Cybersecurity B.S. · 天枢Dubhe — 强网拟态, 西湖论剑, HGAME…", color: "violet" },
@@ -198,6 +199,7 @@ export const nav = [
   { id: "journey", label: "Journey" },
   { id: "projects", label: "Projects" },
   { id: "skills", label: "Skills" },
+  { id: "cv", label: "CV" },
   { id: "contact", label: "Contact" },
 ];
 

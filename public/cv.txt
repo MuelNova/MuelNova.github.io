@@ -20,6 +20,7 @@
 
   [1mDESCRIPTION[0m
       · Security Researcher — THU@vul337 & PKU@pkucclab
+      · Kimi Security Intern @ Moonshot AI
       · 北京大学计算机学院 硕士在读（BUPT 网络空间安全 本科）
       · PWNer @ 天枢Dubhe (retired) — 强网拟态 / 西湖论剑 / HGAME
       · 方向：内存安全、kernel pwn、调试与工具链

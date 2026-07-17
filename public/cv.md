@@ -11,6 +11,7 @@
 
 | 时间 | 经历 |
 | --- | --- |
+| now | Kimi Security Intern — Moonshot AI（月之暗面） |
 | now | Security Researcher — vul337 @ THU · CCLab @ PKU |
 | 2025 → | 北京大学计算机学院 硕士 |
 | 2021–2025 | 北京邮电大学 网络空间安全 本科 · CTF / PWN（天枢Dubhe） |

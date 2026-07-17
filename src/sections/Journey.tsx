@@ -5,13 +5,14 @@ const accent: Record<string, string> = {
   pink: "var(--pink)",
   cyan: "var(--cyan)",
   violet: "var(--violet)",
+  yellow: "var(--yellow)",
 };
 
 export default function Journey() {
   return (
     <Section id="journey" kana="タビジ" title="Journey & Interests">
       {/* 时间线（横向三格） */}
-      <ol className="grid gap-5 sm:grid-cols-3">
+      <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {milestones.map((m) => (
           <li key={m.title} className="card-cyber relative p-5">
             <span

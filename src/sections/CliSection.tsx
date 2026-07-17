@@ -13,7 +13,7 @@ SYNOPSIS
   curl -L zm.md/pdf     PDF 版（重定向）
 
 DESCRIPTION
-  THU@vul337 · PKU@pkucclab · 天枢Dubhe PWNer (retired)
+  THU@vul337 · PKU@pkucclab · Kimi Security Intern · 天枢Dubhe PWNer (retired)
   Python / Go / TS / C++ · GDB / pwntools / angr
   github.com/MuelNova · muel@nova.gal · nova.gal/blog
 
