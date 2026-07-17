@@ -136,7 +136,8 @@ html[data-motion="on"] .anim-caret { animation: caret-blink 1.1s steps(1) infini
 html[data-motion="on"] .anim-star { animation: star-pulse 6s var(--ease-pop) infinite; }
 html[data-motion="on"] .anim-scan { animation: scan-drift 9s linear infinite; }
 html[data-motion="on"] .anim-grid { animation: grid-pan 7s linear infinite; }
-html[data-motion="on"] .anim-marquee { animation: marquee-x 22s linear infinite; }
+/* 轨道半区是 6 份词（见 Footer.tsx），等比放长时长维持 ~42px/s 的原速 */
+html[data-motion="on"] .anim-marquee { animation: marquee-x 130s linear infinite; }
 html[data-motion="on"] .anim-glow { animation: glow-drift 12s ease-in-out infinite; }
 
 /* ---------- 粘滞滚动（deck 模式）：星空首屏 + 每个面板吸顶成「一页一页」 ---------- */
