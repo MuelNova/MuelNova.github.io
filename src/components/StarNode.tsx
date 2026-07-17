@@ -37,8 +37,9 @@ export default function StarNode({
   const c = COLORS[star.color];
   const [hover, setHover] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
-  const active = open || hover;
   const isMobile = useIsMobile();
+  // 移动端触屏的 hover/focus 会粘住（按钮不会失焦），只认 open，否则卡片关不掉
+  const active = open || (!isMobile && hover);
   const sx = isMobile && star.mx != null ? star.mx : star.x;
   const sy = isMobile && star.my != null ? star.my : star.y;
 
