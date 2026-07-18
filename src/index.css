@@ -32,13 +32,38 @@
   --cyan-soft: rgba(var(--cyan-rgb), 0.12);
   --line: rgba(244, 239, 255, 0.1);
 
+  /* ============================================================
+     下半页（MAN PAGE / curl 视角）：近黑中性纸面 + 白色透明度字阶
+     概念：首屏是抬头看的星空，下半页是低头读的这本手册——
+     也就是 curl zm.md 实际拿到的东西的排印版。
+     字阶对 --paper 全部过 WCAG AA：t1≈15:1，t2≈6.9:1，t3≈5.3:1，
+     t3 是允许落字的最暗档；更暗只留给装饰。
+     ============================================================ */
+  --paper: #0e0e10;
+  --paper-2: #111113;
+  --t1: rgba(255, 255, 255, 0.87);
+  --t2: rgba(255, 255, 255, 0.62);
+  --t3: rgba(255, 255, 255, 0.52);
+  --hairline: rgba(255, 255, 255, 0.12);
+  --fill-1: rgba(255, 255, 255, 0.05);
+  --fill-2: rgba(255, 255, 255, 0.1);
+  /* 纪律：aqua 是唯一功能色（可交互/激活/焦点/语法青）；
+     签名粉只给 ✦ 与 $ 提示符；星光黄只给 ★ 计数。 */
+  --accent: var(--cyan);
+  --sig: var(--pink);
+  --star-y: var(--yellow);
+
   /* 浮动 Nav 占用的高度：section 用它补偿，内容才能居中在 Nav 以下的可视区 */
   --nav-h: 5.5rem;
 
   --font-body:
     "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Microsoft YaHei",
     sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", monospace;
+  /* JetBrains Mono 不含方块元素（█ ▄ ▀），逐字回退到 Menlo/DejaVu 才能画出实心 ASCII art */
+  --font-mono:
+    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas,
+    "DejaVu Sans Mono", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", monospace;
   --font-pixel: "DotGothic16", "Zen Maru Gothic", monospace;
 
   /* 弹性过冲 —— yui540 式的「Q 弹」节奏 */
@@ -273,18 +298,186 @@ footer {
   scroll-snap-stop: normal;
 }
 
-/* 滚动显现：默认隐藏，.in-view 时进入（无 JS 时直接可见，见 .no-js 兜底） */
-.reveal {
-  opacity: 0;
-  transform: translateY(28px);
+/* ============================================================
+   下半页：MAN PAGE 排版系统
+   页眉行 / 大写节名 / 发丝线 / 行式列表——不做卡片，不做霓虹，
+   颜色只表达层级与功能（Kimi Quiet Utility + 终端文档感）。
+   ============================================================ */
+/* 页眉行：✦ ZM.MD(1) … Personal Manual … 01 / 06 */
+.man-eyebrow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--t3);
 }
-html[data-motion="on"] .reveal.in-view {
-  animation: rise-in 0.8s var(--ease-out) forwards;
+/* 章节标题 = man section 名：全大写等宽粗体 */
+.man-title {
+  margin-top: 0.625rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.4vw, 2.125rem);
+  letter-spacing: 0.04em;
+  color: var(--t1);
 }
-html[data-motion="off"] .reveal,
-.reveal.in-view {
-  opacity: 1;
-  transform: none;
+/* 标题下发丝线 */
+.man-rule {
+  margin: 1rem 0 0;
+  border: 0;
+  border-top: 1px solid var(--hairline);
+}
+
+/* 行式列表（Projects / Contact / facts…）：发丝分隔，无卡片 */
+.doc-list {
+  border-top: 1px solid var(--hairline);
+}
+.doc-row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
+  margin: 0 -0.5rem;
+  padding: 0.8rem 0.5rem;
+  border-bottom: 1px solid var(--hairline);
+  border-radius: 6px;
+  transition: background-color 0.15s ease;
+}
+a.doc-row {
+  text-decoration: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  a.doc-row:hover {
+    background: var(--fill-1);
+  }
+}
+a.doc-row:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+/* 行内左键名（mono 小字，dim） */
+.doc-key {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--t3);
+}
+.doc-arrow {
+  color: var(--t3);
+  transition:
+    transform 0.15s ease,
+    color 0.15s ease;
+}
+a.doc-row:hover .doc-arrow,
+a.doc-row:focus-visible .doc-arrow {
+  color: var(--accent);
+  transform: translateX(2px);
+}
+
+/* ============================================================
+   终端窗（#cv）：真字节、真 ANSI、命令可复制
+   ============================================================ */
+.term {
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  background: var(--paper-2);
+}
+.term-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--hairline);
+  padding: 0.55rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--t3);
+}
+.term-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0.625rem 0.9rem 0;
+}
+.term-tab {
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  padding: 0.3rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--t3);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .term-tab:hover {
+    background: var(--fill-1);
+    color: var(--t2);
+  }
+}
+.term-tab[aria-selected="true"] {
+  background: var(--fill-2);
+  color: var(--accent);
+}
+.term-body {
+  overflow-x: auto;
+  padding: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.75;
+}
+.term-body pre {
+  margin: 0;
+  white-space: pre;
+}
+/* 换命令时输出逐行「打印」：只淡入（状态变化的最小解释），30ms 错峰 */
+.term-out-line {
+  display: block;
+}
+html[data-motion="on"] .term-out-line {
+  animation: term-line-in 0.3s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+@keyframes term-line-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.term-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex: none;
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  background: transparent;
+  padding: 0.2rem 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--t3);
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .term-copy:hover {
+    color: var(--t1);
+    background: var(--fill-1);
+  }
+}
+.term-copy[data-copied="true"] {
+  color: var(--accent);
+  border-color: rgba(94, 231, 255, 0.45);
 }
 
 /* ============================================================
@@ -313,24 +506,6 @@ html[data-motion="off"] *::after {
 /* ============================================================
    装饰性纹理
    ============================================================ */
-.texture-grid {
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 64px 64px;
-  /* 全程可见，只在最底 ~24rem（Contact 尾段 → 页脚 marquee）淡出收掉；
-     别用径向椭圆：层与整页同高，椭圆在 CV 附近就提前淡出完了 */
-  mask-image: linear-gradient(180deg, black, black calc(100% - 24rem), transparent 100%);
-  opacity: 0.5;
-}
-.texture-scanlines {
-  background: repeating-linear-gradient(
-    0deg,
-    transparent 0 2px,
-    rgba(0, 0, 0, 0.16) 2px 4px
-  );
-  background-size: 100% 120px;
-}
 .texture-dots {
   background-image: radial-gradient(
     rgba(244, 239, 255, 0.12) 1px,
@@ -458,168 +633,6 @@ html[data-motion="off"] .star-card-mobile {
 }
 html[data-motion="on"] .constellation-line {
   animation: dash-flow 8s linear infinite;
-}
-
-/* ============================================================
-   观测档案卡（card-astra）：一片剪下来的夜空
-   - 卡内装饰由 <CardFace /> 渲染：星尘层 + 月光柔晕（.card-skin-*）
-   - 柔晕是一团 blur(30px) 的环境光，不是扫过的金属光带
-   - 星图钉（.card-pin）骑在卡片上边界：描边 → 旋转填色发光
-   - 「光谱色」--accent 按章节统一（不是逐卡彩虹），顶部发丝边带色调
-   - :focus-visible / :focus-within 与 hover 完全同权
-   ============================================================ */
-.card-astra {
-  --accent: var(--pink);
-  position: relative;
-  background: linear-gradient(
-    160deg,
-    rgba(var(--bg3-rgb), 0.85),
-    rgba(var(--bg2-rgb), 0.7)
-  );
-  border: 1px solid var(--line);
-  border-top-color: color-mix(in srgb, var(--accent) 32%, transparent);
-  border-radius: 14px;
-  backdrop-filter: blur(6px);
-  transition:
-    transform 0.25s var(--ease-out),
-    border-color 0.25s ease,
-    box-shadow 0.3s ease;
-}
-/* 卡内装饰的裁剪壳（卡片本体不裁剪，图钉才能骑缝） */
-.card-skin {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  border-radius: inherit;
-  pointer-events: none;
-}
-.card-skin > span {
-  position: absolute;
-  inset: 0;
-}
-/* 星尘层 */
-.card-skin-dust {
-  background-image:
-    radial-gradient(1px 1px at 18% 24%, rgba(255, 255, 255, 0.45), transparent),
-    radial-gradient(1px 1px at 74% 18%, rgba(255, 255, 255, 0.3), transparent),
-    radial-gradient(
-      1.5px 1.5px at 62% 66%,
-      rgba(255, 255, 255, 0.36),
-      transparent
-    ),
-    radial-gradient(1px 1px at 32% 78%, rgba(255, 255, 255, 0.24), transparent);
-  opacity: 0.35;
-  transition: opacity 0.3s ease;
-}
-/* 月光柔晕：顶部一团光谱色的环境光，缓缓呼吸漂移 */
-.card-skin-orb {
-  inset: -45% -20% auto -20%;
-  height: 90%;
-  background: radial-gradient(
-    ellipse at center,
-    color-mix(in srgb, var(--accent) 26%, transparent),
-    transparent 62%
-  );
-  filter: blur(30px);
-  opacity: 0.35;
-  transition: opacity 0.35s ease;
-}
-@keyframes orb-drift {
-  0%,
-  100% {
-    transform: translate(-2%, 0);
-  }
-  50% {
-    transform: translate(2%, 8%);
-  }
-}
-html[data-motion="on"] .card-skin-orb {
-  animation: orb-drift 10s ease-in-out infinite;
-}
-.card-astra:hover .card-skin-dust,
-.card-astra:focus-visible .card-skin-dust,
-.card-astra:focus-within .card-skin-dust {
-  opacity: 0.8;
-}
-.card-astra:hover .card-skin-orb,
-.card-astra:focus-visible .card-skin-orb,
-.card-astra:focus-within .card-skin-orb {
-  opacity: 0.7;
-}
-/* 可交互卡（链接）才有位移/描边/投影——非交互卡不给「可以点击」的错觉 */
-.card-astra-link:hover,
-.card-astra-link:focus-visible {
-  transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
-  box-shadow: 0 14px 44px -16px
-    color-mix(in srgb, var(--accent) 40%, transparent);
-}
-
-/* 星图钉：骑在卡片上边界 */
-.card-pin {
-  position: absolute;
-  top: -7px;
-  left: 18px;
-  z-index: 1;
-  width: 13px;
-  height: 13px;
-  fill: transparent;
-  stroke: var(--accent, var(--pink));
-  stroke-width: 1.1;
-  opacity: 0.55;
-  transition:
-    transform 0.35s var(--ease-pop),
-    opacity 0.25s ease,
-    fill 0.25s ease,
-    filter 0.25s ease;
-}
-.card-astra:hover .card-pin,
-.card-astra:focus-visible .card-pin,
-.card-astra:focus-within .card-pin {
-  fill: var(--accent, var(--pink));
-  opacity: 1;
-  transform: rotate(45deg);
-  filter: drop-shadow(0 0 5px var(--accent, var(--pink)));
-}
-
-/* 技能 chip：hover 只亮边与字，不加多余动效 */
-.chip-star {
-  transition:
-    border-color 0.25s ease,
-    color 0.25s ease;
-}
-.chip-star:hover {
-  border-color: color-mix(in srgb, var(--pink) 45%, transparent);
-  color: var(--ink);
-}
-
-/* 链接下划线动效 */
-.link-magical {
-  position: relative;
-  color: var(--cyan);
-  text-decoration: none;
-}
-.link-magical::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, var(--pink), var(--cyan));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s var(--ease-out);
-}
-.link-magical:hover::after,
-.link-magical:focus-visible::after {
-  transform: scaleX(1);
-}
-
-@media (max-width: 640px) {
-  .texture-grid {
-    background-size: 44px 44px;
-  }
 }
 
 /* ============================================================

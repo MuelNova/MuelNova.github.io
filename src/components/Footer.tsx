@@ -1,46 +1,31 @@
-import { chrome, marqueeWords, profile } from "@/data/content";
+import { chrome, profile } from "@/data/content";
 
-// 轨道 = 两个相同半区，动画平移 -50% 无缝循环 ⟹ 单半宽度必须 ≥ 视口宽。
-// 一份词约 925px，6 份 ≈ 5.5k px，覆盖 5K 宽屏；时长在 CSS 里同步放长以维持原速。
-const HALF = Array.from({ length: 6 }, () => marqueeWords).flat();
-
+/** 手册的最后一行：man page 的页脚（zm.md(1) · 年份 · MUELNOVA(1)）。 */
 export default function Footer() {
   return (
-    <footer
-      className="relative z-10 border-t"
-      style={{ borderColor: "var(--line)" }}
-    >
-      {/* 细带跑马灯（克制度：只在页脚） */}
-      <div
-        aria-hidden="true"
-        className="overflow-hidden border-b py-2.5"
-        style={{ borderColor: "var(--line)" }}
-      >
-        <div
-          className="anim-marquee flex w-max gap-8 whitespace-nowrap font-pixel text-xs tracking-[0.3em]"
-          style={{ color: "var(--faint)" }}
-        >
-          {[...HALF, ...HALF].map((w, i) => (
-            <span key={i}>
-              {w} <span style={{ color: "var(--pink)" }}>✦</span>
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <div className="py-10 text-center">
-        <p
-          className="font-pixel text-sm tracking-[0.3em]"
-          style={{ color: "var(--pink)" }}
-        >
-          {chrome.footerLine}
+    <footer className="relative z-10 border-t" style={{ borderColor: "var(--hairline)" }}>
+      <div className="mx-auto w-full max-w-3xl px-5 py-10">
+        <p aria-hidden="true" className="man-eyebrow">
+          <span>zm.md(1)</span>
+          <span className="hidden sm:inline">2026</span>
+          <span>MUELNOVA(1)</span>
         </p>
-        <p className="mt-3 font-mono text-xs" style={{ color: "var(--faint)" }}>
+        <hr className="man-rule" aria-hidden="true" />
+        <p className="mt-8 text-center font-mono text-[12px] tracking-[0.22em]" style={{ color: "var(--t2)" }}>
+          <span style={{ color: "var(--sig)" }}>✦</span>
+          {" "}{chrome.footerLine.replace(/^✦\s*|\s*✦$/g, "")}{" "}
+          <span style={{ color: "var(--sig)" }}>✦</span>
+        </p>
+        <p className="mt-3 text-center font-mono text-[11px]" style={{ color: "var(--t3)" }}>
           © {new Date().getFullYear()} {profile.name} ·{" "}
-          <a className="link-magical" href={profile.blog}>
-            nova.gal
+          <a
+            href={profile.blog}
+            className="underline decoration-from-font underline-offset-4 transition hover:opacity-80"
+            style={{ color: "var(--accent)" }}
+          >
+            nova.gal/blog
           </a>{" "}
-          · <span style={{ color: "var(--cyan)" }}>zm.md</span>
+          · <span style={{ color: "var(--sig)" }}>zm.md</span> · 39.9042° N, 116.4074° E
         </p>
       </div>
     </footer>

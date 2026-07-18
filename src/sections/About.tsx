@@ -1,27 +1,28 @@
 import Section from "@/components/Section";
-import CardFace, { ACCENTS } from "@/components/CardFace";
 import { about, sectionTitles } from "@/data/content";
-import type { CSSProperties } from "react";
 
 export default function About() {
   return (
-    <Section id="about" kana={sectionTitles.about.kana} title={sectionTitles.about.title}>
-      <div className="grid gap-6 md:grid-cols-5">
-        <div className="space-y-3.5 md:col-span-3">
+    <Section id="about" man={sectionTitles.about.man} page={sectionTitles.about.page}>
+      <div className="grid gap-8 md:grid-cols-5">
+        {/* DESCRIPTION：手册正文，等宽长读 */}
+        <div className="space-y-4 md:col-span-3">
           {about.paragraphs.map((p, i) => (
-            <p key={i} className="text-[15px] leading-relaxed" style={{ color: i === 0 ? "var(--ink)" : "var(--muted)" }}>
+            <p
+              key={i}
+              className="font-mono text-[13px] leading-[1.9]"
+              style={{ color: i === 0 ? "var(--t1)" : "var(--t2)" }}
+            >
               {p}
             </p>
           ))}
         </div>
-        <dl className="card-astra h-fit p-5 font-mono text-[13px] md:col-span-2" style={{ "--accent": ACCENTS.cyan } as CSSProperties}>
-          <CardFace />
+        {/* ENVIRONMENT：键值行 */}
+        <dl className="doc-list h-fit md:col-span-2">
           {about.facts.map((f) => (
-            <div key={f.k} className="mb-3 last:mb-0">
-              <dt className="text-xs" style={{ color: "var(--cyan)" }}>
-                :: {f.k}
-              </dt>
-              <dd className="mt-0.5" style={{ color: "var(--muted)" }}>
+            <div key={f.k} className="doc-row">
+              <dt className="doc-key w-[5.5rem] shrink-0">{f.k.toUpperCase()}</dt>
+              <dd className="min-w-0 flex-1 font-mono text-[13px]" style={{ color: "var(--t1)" }}>
                 {f.v}
               </dd>
             </div>

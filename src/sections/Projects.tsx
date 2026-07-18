@@ -1,64 +1,65 @@
 import Section from "@/components/Section";
-import CardFace, { ACCENTS } from "@/components/CardFace";
 import { projects, sectionTitles, sideProjects, sideQuestsTitle } from "@/data/content";
-import type { CSSProperties } from "react";
 
+/**
+ * 项目索引：整行即链接，发丝线分隔。
+ * hover 只给底（surface 表达状态），↗ 染色移位；focus-visible 同权。
+ */
 export default function Projects() {
   return (
-    <Section id="projects" kana={sectionTitles.projects.kana} title={sectionTitles.projects.title}>
-      {/* 主线：紧凑网格 */}
-      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <Section id="projects" man={sectionTitles.projects.man} page={sectionTitles.projects.page}>
+      <ul className="doc-list">
         {projects.map((p) => (
           <li key={p.name}>
             <a
               href={p.url}
               target="_blank"
               rel="noreferrer"
-              className="card-astra card-astra-link group flex h-full flex-col p-4 no-underline"
-              style={{ "--accent": ACCENTS.pink } as CSSProperties}
+              className="doc-row group"
               aria-label={`${p.name} — ${p.desc}（GitHub，新窗口打开）`}
             >
-              <CardFace />
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs" style={{ color: "var(--cyan)" }}>
-                  {p.tag}
-                </span>
-                {p.star && <span aria-hidden="true" className="sparkle h-3.5 w-3.5" style={{ background: "var(--yellow)" }} />}
-              </div>
-              <h3 className="mt-2 break-words font-mono text-[15px] font-bold text-white group-hover:underline">
-                {p.name} <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-0.5">↗</span>
-              </h3>
-              <p className="mt-1.5 flex-1 text-[13px] leading-snug" style={{ color: "var(--muted)" }}>
+              <span className="order-1 flex items-baseline gap-2 font-mono text-[13px] font-bold sm:order-none" style={{ color: "var(--t1)" }}>
+                <span className="group-hover:underline">{p.name}</span>
+                {p.stars != null && (
+                  <span className="text-[11.5px] font-normal" style={{ color: "var(--star-y)" }}>
+                    ★{p.stars}
+                  </span>
+                )}
+              </span>
+              <span className="order-4 basis-full font-mono text-[12.5px] sm:order-none sm:basis-auto sm:min-w-40 sm:flex-1" style={{ color: "var(--t2)" }}>
                 {p.desc}
-              </p>
-              <p className="mt-3 font-mono text-[11px]" style={{ color: "var(--faint)" }}>
-                ● {p.lang}
-              </p>
+              </span>
+              <span className="doc-key order-2 ml-auto sm:order-none sm:ml-0">
+                {p.lang} · {p.tag}
+              </span>
+              <span aria-hidden="true" className="doc-arrow order-3 sm:order-none">
+                ↗
+              </span>
             </a>
           </li>
         ))}
       </ul>
 
-      {/* 副业：两列 compact 行 */}
-      <h3 className="mt-8 font-pixel text-xs tracking-[0.35em]" style={{ color: "var(--pink)" }}>
-        {sideQuestsTitle} <span aria-hidden="true">✦</span>
-      </h3>
-      <ul className="mt-3 grid gap-x-8 gap-y-1.5 sm:grid-cols-2">
+      <h3 className="doc-key mt-9 mb-3 tracking-[0.18em]">{sideQuestsTitle}</h3>
+      <ul className="doc-list">
         {sideProjects.map((p) => (
           <li key={p.name}>
             <a
               href={p.url}
               target="_blank"
               rel="noreferrer"
-              className="group flex items-baseline justify-between gap-3 border-b py-1.5 no-underline transition-colors hover:bg-white/[0.03]"
-              style={{ borderColor: "var(--line)" }}
+              className="doc-row group"
+              aria-label={`${p.name} — ${p.desc}（GitHub，新窗口打开）`}
             >
-              <span className="min-w-0 text-[13px]">
-                <span className="font-mono font-bold text-white group-hover:underline">{p.name}</span>{" "}
-                <span style={{ color: "var(--muted)" }}>{p.desc}</span>
+              <span className="order-1 font-mono text-[12.5px] font-bold group-hover:underline sm:order-none" style={{ color: "var(--t1)" }}>
+                {p.name}
               </span>
-              <span className="shrink-0 font-mono text-[11px]" style={{ color: "var(--faint)" }}>
-                {p.tag}
+              <span className="order-4 basis-full font-mono text-[12px] sm:order-none sm:basis-auto sm:min-w-40 sm:flex-1" style={{ color: "var(--t2)" }}>
+                {p.desc}
+              </span>
+              <span className="doc-key order-2 ml-auto sm:order-none sm:ml-0">{p.tag}</span>
+              <span aria-hidden="true" className="doc-arrow order-3 sm:order-none">
+                ↗
               </span>
             </a>
           </li>

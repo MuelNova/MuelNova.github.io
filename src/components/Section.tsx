@@ -1,31 +1,44 @@
 import type { ReactNode } from "react";
+import { sectionTotal } from "@/data/content";
 
-/** 全屏章节骨架：片假名 + 标题 + 内容。Deck 模式下每个 section 撑满一屏。 */
+/**
+ * 下半页章节骨架：man page 的一节。
+ * 页眉行（✦ ZM.MD(1) · Personal Manual · 页码）+ 大写节名 + 发丝线 + 内容。
+ * 不做滚动显现——内容本来就该在（无 JS / 读屏器 / 打印都直接可读）。
+ */
 export default function Section({
   id,
-  kana,
-  title,
+  man,
+  page,
   children,
 }: {
   id: string;
-  kana: string;
-  title: string;
+  /** 大写节名，如 ABOUT */
+  man: string;
+  /** 页码，如 "01" */
+  page: string;
   children: ReactNode;
 }) {
   return (
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className="deck-panel relative mx-auto flex min-h-[100svh] w-full max-w-5xl flex-col justify-center px-5 pb-8 pt-[calc(var(--nav-h)+2rem)]"
+      className="deck-panel relative mx-auto flex min-h-[100svh] w-full max-w-3xl flex-col justify-center px-5 pb-8 pt-[calc(var(--nav-h)+2rem)]"
     >
-      <p aria-hidden="true" className="reveal font-pixel text-sm tracking-[0.4em]" style={{ color: "var(--pink)" }}>
-        {kana}
+      <p aria-hidden="true" className="man-eyebrow">
+        <span>
+          <span style={{ color: "var(--sig)" }}>✦ </span>ZM.MD(1)
+        </span>
+        <span className="hidden sm:inline">Personal Manual</span>
+        <span>
+          {page} / {sectionTotal}
+        </span>
       </p>
-      <h2 id={`${id}-title`} className="reveal mt-2 text-3xl font-black tracking-tight sm:text-4xl" style={{ animationDelay: "0.08s" }}>
-        {title}
-        <span aria-hidden="true" style={{ color: "var(--cyan)" }}>.</span>
+      <h2 id={`${id}-title`} className="man-title">
+        {man}
       </h2>
-      <div className="reveal mt-6 sm:mt-8" style={{ animationDelay: "0.16s" }}>{children}</div>
+      <hr className="man-rule" aria-hidden="true" />
+      <div className="mt-7">{children}</div>
     </section>
   );
 }

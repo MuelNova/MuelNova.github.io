@@ -1,9 +1,7 @@
-import Backdrop from "@/components/Backdrop";
 import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
 import { chrome } from "@/data/content";
 import { useDeckPaging } from "@/hooks/useDeckPaging";
-import { useRevealAll } from "@/hooks/useInView";
 import About from "@/sections/About";
 import CliSection from "@/sections/CliSection";
 import Contact from "@/sections/Contact";
@@ -13,11 +11,10 @@ import Skills from "@/sections/Skills";
 import StarField from "@/sections/StarField";
 
 export default function Home() {
-  const rootRef = useRevealAll<HTMLDivElement>();
   useDeckPaging();
 
   return (
-    <div ref={rootRef} className="relative">
+    <div className="relative">
       <a
         href="#about"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[90] focus:rounded-lg focus:px-4 focus:py-2"
@@ -28,9 +25,12 @@ export default function Home() {
       <Nav />
       {/* 星空首屏（惊艳层）：整站门面，可探索 */}
       <StarField />
-      {/* 传统区（信息/无障碍层）：内容与星空同源 */}
-      <div className="relative" style={{ background: "var(--bg)" }}>
-        <Backdrop />
+      {/* 下半页（man page 层）：首屏夜空渐变落到近黑纸面，
+          从这里开始就是 curl zm.md 拿到的那本手册 */}
+      <div
+        className="relative"
+        style={{ background: "linear-gradient(180deg, var(--bg) 0rem, var(--paper) 22rem)" }}
+      >
         <main className="relative z-10">
           <About />
           <Journey />

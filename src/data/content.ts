@@ -80,7 +80,8 @@ export type Project = {
   url: string;
   lang: string;
   tag: string;
-  star?: boolean;
+  /** GitHub star 数（有就显示成 ★N，语义色：星光黄） */
+  stars?: number;
 };
 
 /** 主项目：安全/工具主线 */
@@ -91,7 +92,7 @@ export const projects: Project[] = [
     url: "https://github.com/MuelNova/PwNo",
     lang: "Python",
     tag: "pwn · dx",
-    star: true,
+    stars: 13,
   },
   {
     name: "NoPwnDocker",
@@ -99,7 +100,7 @@ export const projects: Project[] = [
     url: "https://github.com/MuelNova/NoPwnDocker",
     lang: "Dockerfile",
     tag: "pwn · env",
-    star: true,
+    stars: 11,
   },
   {
     name: "Kernel-Exploit-Dojo",
@@ -204,78 +205,24 @@ export const nav = [
   { id: "contact", label: "Contact" },
 ];
 
-/** 页脚细带跑马灯（克制度：只在页脚） */
-export const marqueeWords = [
-  "MAGICAL",
-  "SECURITY",
-  "PWN",
-  "NEKO",
-  "KERNEL",
-  "STARS",
-  "KAWAII",
-  "TERMINAL",
-];
-
-/** 每个区块的片假名小注 + 标题（Section 的 kana/title） */
+/** 每个区块的 man page 节名 + 页码（Section 的 man/page） */
 export const sectionTitles = {
-  about: { kana: "アバウト", title: "About" },
-  journey: { kana: "タビジ", title: "Journey & Interests" },
-  projects: { kana: "プロジェクト", title: "Projects" },
-  skills: { kana: "スキル", title: "Skills" },
-  cv: { kana: "シーヴィー", title: "cv" },
-  contact: { kana: "コンタクト", title: "Contact" },
+  about: { man: "ABOUT", page: "01" },
+  journey: { man: "JOURNEY", page: "02" },
+  projects: { man: "PROJECTS", page: "03" },
+  skills: { man: "SKILLS", page: "04" },
+  cv: { man: "CV", page: "05" },
+  contact: { man: "CONTACT", page: "06" },
 } as const;
+export const sectionTotal = "06";
 
-/** #cv 区块的假终端演示；真实输出是 public/cv.txt，两边措辞手动对齐 */
-/** CV 测控台：三条可「运行」的命令（输出与 worker/ 路由一一对应） */
+/** #cv 终端的三条命令；输出直接用 public/cv.txt / cv.md 的真字节（?raw 内联），
+    pdf 标签页渲染 302→200 的 HTTP 实录（与 worker/ 路由一一对应） */
 export const cliCmds = [
-  {
-    id: "txt",
-    cmd: "curl zm.md",
-    output: `MUELNOVA(1)         User Commands        MUELNOVA(1)
-
-NAME
-  muel — security researcher, CTF pwner, cat person
-
-SYNOPSIS
-  curl zm.md            这份纯文本简历
-  curl zm.md/cv.md      Markdown 版
-  curl zm.md/cv.pdf     PDF 版
-
-DESCRIPTION
-  vul337 @ THU · pkucclab @ PKU · Security Intern @ Moonshot AI· 天枢Dubhe PWNer (retired)
-  Python / Go / TS / C++ · GDB / pwntools / angr
-  github.com/MuelNova · muel@nova.gal · nova.gal/blog
-
-SEE ALSO
-  在浏览器里打开同一个地址，就是你正在看的这个站。`,
-  },
-  {
-    id: "md",
-    cmd: "curl zm.md/cv.md",
-    output: `# Miao Zhao (MuelNova)
-
-Security Researcher · Retired Pwner
-vul337 @ THU · pkucclab @ PKU · Security Intern @ Moonshot AI
-BUPT Cybersecurity (B.S.) → PKU CS (M.S.)
-
-## Main Quests
-- PwNo ★13            pwntools 扩展，开箱即用
-- NoPwnDocker ★11     一键 pwn 环境 16.04→24.04
-- Kernel-Exploit-Dojo CTF kernel 利用笔记/PoC
-
-## Elsewhere
-github.com/MuelNova · muel@nova.gal · nova.gal/blog`,
-  },
-  {
-    id: "pdf",
-    cmd: "curl zm.md/cv.pdf",
-    output: `HTTP/2 302
-location: /cv.pdf
-
-< NOT IMPLEMENTED。`,
-  },
-];
+  { id: "txt", cmd: "curl zm.md" },
+  { id: "md", cmd: "curl zm.md/cv.md" },
+  { id: "pdf", cmd: "curl -sIL zm.md/pdf" },
+] as const;
 
 /** 副业小节的标题（条目在 sideProjects） */
 export const sideQuestsTitle = "SIDE QUESTS";
