@@ -205,16 +205,15 @@ export const nav = [
   { id: "contact", label: "Contact" },
 ];
 
-/** 每个区块的 man page 节名 + 页码（Section 的 man/page） */
+/** 每个区块的片假名小注 + 标题（Section 的 kana/title） */
 export const sectionTitles = {
-  about: { man: "ABOUT", page: "01" },
-  journey: { man: "JOURNEY", page: "02" },
-  projects: { man: "PROJECTS", page: "03" },
-  skills: { man: "SKILLS", page: "04" },
-  cv: { man: "CV", page: "05" },
-  contact: { man: "CONTACT", page: "06" },
+  about: { kana: "アバウト", title: "About" },
+  journey: { kana: "タビジ", title: "Journey & Interests" },
+  projects: { kana: "プロジェクト", title: "Projects" },
+  skills: { kana: "スキル", title: "Skills" },
+  cv: { kana: "シーヴィー", title: "cv" },
+  contact: { kana: "コンタクト", title: "Contact" },
 } as const;
-export const sectionTotal = "06";
 
 /** #cv 终端的三条命令；输出直接用 public/cv.txt / cv.md 的真字节（?raw 内联），
     pdf 标签页渲染 302→200 的 HTTP 实录（与 worker/ 路由一一对应） */

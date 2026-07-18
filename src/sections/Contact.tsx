@@ -1,10 +1,10 @@
 import Section from "@/components/Section";
 import { profile, sectionTitles, socials } from "@/data/content";
 
-/** FILES：联系方式就是手册末尾的文件清单。 */
+/** 联络星表：整行即链接，GPG 指纹压底。 */
 export default function Contact() {
   return (
-    <Section id="contact" man={sectionTitles.contact.man} page={sectionTitles.contact.page}>
+    <Section id="contact" kana={sectionTitles.contact.kana} title={sectionTitles.contact.title}>
       <ul className="doc-list">
         {socials.map((s) => (
           <li key={s.label}>
@@ -15,7 +15,7 @@ export default function Contact() {
               className="doc-row group"
             >
               <span className="doc-key w-24 shrink-0">{s.label.toUpperCase()}</span>
-              <span className="min-w-0 flex-1 font-mono text-[13px] font-bold group-hover:underline" style={{ color: "var(--t1)" }}>
+              <span className="doc-name min-w-0 flex-1 font-mono text-[13px] font-bold group-hover:underline" style={{ color: "var(--t1)" }}>
                 {s.handle}
               </span>
               <span aria-hidden="true" className="doc-arrow">

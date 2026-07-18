@@ -145,7 +145,7 @@ story = [
     body("muel@nova.gal"),
     body("GPG  6C4F 47DB A3A8 EB3B 5670 172A 6AC1 E2FC FE4A A441"),
     head("SEE ALSO"),
-    body("同一个域名，两种打开方式 —— Hacking 4 fun!"),
+    body("curl(1), wget(1), zm.md(1)"),
 ]
 
 doc = BaseDocTemplate(str(OUT), pagesize=A4,

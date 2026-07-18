@@ -47,4 +47,4 @@
 - **Web**: Astro / Tailwind / React / Cloudflare Workers
 
 ---
-*同一个域名，两种打开方式：`curl zm.md` 拿到本文件，浏览器打开是主页 ✦*
+*zm.md · 2026*

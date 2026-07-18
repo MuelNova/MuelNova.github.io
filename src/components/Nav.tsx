@@ -139,11 +139,11 @@ export default function Nav() {
             : {
                 marginTop: "0.75rem",
                 padding: "0.45rem 1.25rem",
-                background: "rgba(14,14,16,.62)",
-                borderColor: "rgba(255,255,255,.12)",
+                background: "rgba(11,7,19,.55)",
+                borderColor: "rgba(244,239,255,.12)",
                 backdropFilter: "blur(14px)",
                 WebkitBackdropFilter: "blur(14px)",
-                boxShadow: "0 10px 36px -18px rgba(0,0,0,.85), inset 0 1px 0 rgba(255,255,255,.06)",
+                boxShadow: "0 10px 36px -14px rgba(255,110,199,.35), inset 0 1px 0 rgba(255,255,255,.07)",
               }
         }
       >

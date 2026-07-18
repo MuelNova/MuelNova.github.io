@@ -54,6 +54,6 @@
       GPG  6C4F 47DB A3A8 EB3B 5670 172A 6AC1 E2FC FE4A A441
 
   [1mSEE ALSO[0m
-      同一个域名，两种打开方式 —— Hacking 4 fun!
+      curl(1), wget(1), zm.md(1)
 
 zm.md(1)                      2026                         MUELNOVA(1)

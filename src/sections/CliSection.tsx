@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Section from "@/components/Section";
+import CardFace from "@/components/CardFace";
 import { cliCmds, profile, sectionTitles } from "@/data/content";
 import { parseAnsiLines, type AnsiSeg } from "@/lib/ansi";
 import cvTxtRaw from "../../public/cv.txt?raw";
@@ -100,13 +101,9 @@ export default function CliSection() {
   };
 
   return (
-    <Section id="cv" man={sectionTitles.cv.man} page={sectionTitles.cv.page}>
-      <p className="mb-5 max-w-xl font-mono text-[13px] leading-relaxed" style={{ color: "var(--t2)" }}>
-        同一个域名，两种打开方式：浏览器里是星空，终端里是简历。
-        挑一条命令「跑」一下——返回的是真字节。
-      </p>
-
+    <Section id="cv" kana={sectionTitles.cv.kana} title={sectionTitles.cv.title}>
       <div className="term">
+        <CardFace pin={false} />
         {/* 台头：提示符身份 + raw 出口 + 复制命令 */}
         <div className="term-titlebar">
           <p aria-hidden="true">
@@ -242,10 +239,6 @@ export default function CliSection() {
           </p>
         </div>
       </div>
-
-      <p className="mt-4 font-mono text-[11px] leading-relaxed" style={{ color: "var(--t3)" }}>
-        # 输出是 public/cv.txt · cv.md 的逐字内容，ANSI 原样透传；PDF 是一页排成 man page 的简历，由 Cloudflare Worker 302 提供。
-      </p>
     </Section>
   );
 }

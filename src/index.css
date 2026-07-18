@@ -12,7 +12,7 @@
   --bg-3: #1d1136;
   --ink: #f4efff;
   --muted: #b3a8d6;
-  --faint: #7e739e;
+  --faint: #8b81ad; /* 调亮到 AA（对 --bg ≈5.2:1），可放心落小字 */
 
   --pink: #ff6ec7;
   --cyan: #5ee7ff;
@@ -33,22 +33,19 @@
   --line: rgba(244, 239, 255, 0.1);
 
   /* ============================================================
-     下半页（MAN PAGE / curl 视角）：近黑中性纸面 + 白色透明度字阶
-     概念：首屏是抬头看的星空，下半页是低头读的这本手册——
-     也就是 curl zm.md 实际拿到的东西的排印版。
-     字阶对 --paper 全部过 WCAG AA：t1≈15:1，t2≈6.9:1，t3≈5.3:1，
-     t3 是允许落字的最暗档；更暗只留给装饰。
+     下半页与首屏同一片天：组件级变量只是星空色的别名，
+     换肤时整页一起动。t1/t2/t3 对 --bg 全部过 WCAG AA。
      ============================================================ */
-  --paper: #0e0e10;
-  --paper-2: #111113;
-  --t1: rgba(255, 255, 255, 0.87);
-  --t2: rgba(255, 255, 255, 0.62);
-  --t3: rgba(255, 255, 255, 0.52);
-  --hairline: rgba(255, 255, 255, 0.12);
-  --fill-1: rgba(255, 255, 255, 0.05);
-  --fill-2: rgba(255, 255, 255, 0.1);
-  /* 纪律：aqua 是唯一功能色（可交互/激活/焦点/语法青）；
-     签名粉只给 ✦ 与 $ 提示符；星光黄只给 ★ 计数。 */
+  --paper: var(--bg);
+  --paper-2: rgba(var(--bg2-rgb), 0.55);
+  --t1: var(--ink);
+  --t2: var(--muted);
+  --t3: var(--faint);
+  --hairline: var(--line);
+  --fill-1: rgba(var(--cyan-rgb), 0.06);
+  --fill-2: rgba(var(--cyan-rgb), 0.13);
+  /* 纪律：cyan 是仪器主色（可交互/激活/焦点）；粉只给 ✦ / kana / $；
+     星光黄只给 ★ 计数。 */
   --accent: var(--cyan);
   --sig: var(--pink);
   --star-y: var(--yellow);
@@ -299,38 +296,257 @@ footer {
 }
 
 /* ============================================================
-   下半页：MAN PAGE 排版系统
-   页眉行 / 大写节名 / 发丝线 / 行式列表——不做卡片，不做霓虹，
-   颜色只表达层级与功能（Kimi Quiet Utility + 终端文档感）。
+   下半页：夜空仪器组件
+   与首屏同一片天——玻璃面板透出星尘与柔光，cyan 是仪器主色，
+   粉只给 ✦ / kana / $，黄只给 ★。动效全由 data-motion 门控。
    ============================================================ */
-/* 页眉行：✦ ZM.MD(1) … Personal Manual … 01 / 06 */
-.man-eyebrow {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  color: var(--t3);
+/* 滚动显现：blur + 上浮，700ms 缓出——「出现」要有空气感，不是硬切 */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  filter: blur(6px);
 }
-/* 章节标题 = man section 名：全大写等宽粗体 */
-.man-title {
-  margin-top: 0.625rem;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: clamp(1.5rem, 3.4vw, 2.125rem);
-  letter-spacing: 0.04em;
-  color: var(--t1);
+html[data-motion="on"] .reveal.in-view {
+  animation: sky-in 0.7s var(--ease-out) forwards;
 }
-/* 标题下发丝线 */
-.man-rule {
-  margin: 1rem 0 0;
-  border: 0;
-  border-top: 1px solid var(--hairline);
+@keyframes sky-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+html[data-motion="off"] .reveal,
+.reveal.in-view {
+  opacity: 1;
+  transform: none;
+  filter: none;
 }
 
-/* 行式列表（Projects / Contact / facts…）：发丝分隔，无卡片 */
+/* 章节头星座：入视时线段描画自己（pathLength=100 归一化），星子错峰弹入 */
+.constel-seg {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+html[data-motion="on"] .in-view .constel-seg {
+  animation: constel-draw 0.9s var(--ease-out) forwards;
+}
+html[data-motion="on"] .in-view .constel-seg.seg-2 {
+  animation-delay: 0.3s;
+}
+html[data-motion="off"] .constel-seg,
+.in-view .constel-seg {
+  stroke-dashoffset: 0;
+}
+@keyframes constel-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.constel-star {
+  opacity: 0;
+  transform: scale(0.3);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+html[data-motion="on"] .in-view .constel-star {
+  animation: pop-in 0.5s var(--ease-pop) forwards;
+}
+html[data-motion="off"] .constel-star,
+.in-view .constel-star {
+  opacity: 1;
+  transform: none;
+}
+
+/* 夜空玻璃卡：半透明夜色 + 背滤，全局星尘透进来；
+   卡内装饰由 <CardFace /> 渲染（星尘层 + 月光柔晕 + 骑缝星图钉） */
+.card-astra {
+  --accent: var(--cyan);
+  position: relative;
+  background: linear-gradient(
+    160deg,
+    rgba(var(--bg3-rgb), 0.55),
+    rgba(var(--bg2-rgb), 0.4)
+  );
+  border: 1px solid var(--line);
+  border-top-color: color-mix(in srgb, var(--accent) 28%, transparent);
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition:
+    transform 0.25s var(--ease-out),
+    border-color 0.25s ease,
+    box-shadow 0.3s ease;
+}
+.card-skin {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.card-skin > span {
+  position: absolute;
+  inset: 0;
+}
+.card-skin-dust {
+  background-image:
+    radial-gradient(1px 1px at 18% 24%, rgba(255, 255, 255, 0.45), transparent),
+    radial-gradient(1px 1px at 74% 18%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1.5px 1.5px at 62% 66%, rgba(255, 255, 255, 0.36), transparent),
+    radial-gradient(1px 1px at 32% 78%, rgba(255, 255, 255, 0.24), transparent);
+  opacity: 0.35;
+  transition: opacity 0.3s ease;
+}
+.card-skin-orb {
+  inset: -45% -20% auto -20%;
+  height: 90%;
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--accent) 24%, transparent),
+    transparent 62%
+  );
+  filter: blur(30px);
+  opacity: 0.3;
+  transition: opacity 0.35s ease;
+}
+@keyframes orb-drift {
+  0%,
+  100% {
+    transform: translate(-2%, 0);
+  }
+  50% {
+    transform: translate(2%, 8%);
+  }
+}
+html[data-motion="on"] .card-skin-orb {
+  animation: orb-drift 10s ease-in-out infinite;
+}
+.card-astra:hover .card-skin-dust,
+.card-astra:focus-visible .card-skin-dust,
+.card-astra:focus-within .card-skin-dust {
+  opacity: 0.8;
+}
+.card-astra:hover .card-skin-orb,
+.card-astra:focus-visible .card-skin-orb,
+.card-astra:focus-within .card-skin-orb {
+  opacity: 0.65;
+}
+.card-astra-link:hover,
+.card-astra-link:focus-visible {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow: 0 14px 44px -16px color-mix(in srgb, var(--accent) 38%, transparent);
+}
+/* 星图钉：骑在卡片上边界，hover/焦点时旋转填色发光 */
+.card-pin {
+  position: absolute;
+  top: -7px;
+  left: 18px;
+  z-index: 1;
+  width: 13px;
+  height: 13px;
+  fill: transparent;
+  stroke: var(--accent);
+  stroke-width: 1.1;
+  opacity: 0.55;
+  transition:
+    transform 0.35s var(--ease-pop),
+    opacity 0.25s ease,
+    fill 0.25s ease,
+    filter 0.25s ease;
+}
+.card-astra:hover .card-pin,
+.card-astra:focus-visible .card-pin,
+.card-astra:focus-within .card-pin {
+  fill: var(--accent);
+  opacity: 1;
+  transform: rotate(45deg);
+  filter: drop-shadow(0 0 5px var(--accent));
+}
+
+/* 卡顶星图：钉尾迹 ⇢ 角落小星座。默认沉睡；
+   hover/聚焦时尾迹描画自己，星子点亮，星图线缓缓流动。
+   .term（观测窗）共享同一套星图语言。 */
+.card-chart {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.card-chart-trail {
+  position: absolute;
+  left: 34px; /* 钉尾：钉子（left:18 + 13宽）之后起笔 */
+  top: 1px;
+  width: 42%; /* 随卡宽伸缩：窄卡短尾，宽卡 capped */
+  max-width: 140px;
+  min-width: 60px;
+  height: 14px;
+}
+/* 彗尾：渐变消隐的短线，clip-path 从钉子身后描出；
+   静止与 motion=off 一律完全隐藏——不连接任何元素 */
+.card-trail {
+  stroke-width: 1.2;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.6s var(--ease-out);
+}
+.card-chart-corner {
+  position: absolute;
+  top: 3px;
+  right: 10px;
+  width: 48px;
+  height: 24px;
+}
+.card-chart-star {
+  fill: var(--accent);
+  opacity: 0.35;
+  transition:
+    opacity 0.3s ease,
+    filter 0.3s ease;
+}
+.card-chart-link {
+  stroke: color-mix(in srgb, var(--accent) 50%, transparent);
+  stroke-width: 0.8;
+  stroke-dasharray: 2 4;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+.card-astra:hover .card-trail,
+.card-astra:focus-within .card-trail,
+.term:hover .card-trail,
+.term:focus-within .card-trail {
+  clip-path: inset(0 0 0 0);
+}
+html[data-motion="off"] .card-trail {
+  transition: none;
+  clip-path: inset(0 100% 0 0); /* 静态模式：装饰保持沉睡，不落一道「划痕」 */
+}
+.card-astra:hover .card-chart-star,
+.card-astra:focus-within .card-chart-star,
+.term:hover .card-chart-star,
+.term:focus-within .card-chart-star {
+  opacity: 1;
+  filter: drop-shadow(0 0 4px var(--accent));
+}
+.card-astra:hover .card-chart-link,
+.card-astra:focus-within .card-chart-link,
+.term:hover .card-chart-link,
+.term:focus-within .card-chart-link {
+  opacity: 0.9;
+}
+html[data-motion="on"] .card-astra:hover .card-chart-link,
+html[data-motion="on"] .card-astra:focus-within .card-chart-link,
+html[data-motion="on"] .term:hover .card-chart-link,
+html[data-motion="on"] .term:focus-within .card-chart-link {
+  animation: dash-flow 6s linear infinite;
+}
+html[data-motion="on"] .card-astra:hover .card-chart-star:last-child,
+html[data-motion="on"] .card-astra:focus-within .card-chart-star:last-child,
+html[data-motion="on"] .term:hover .card-chart-star:last-child,
+html[data-motion="on"] .term:focus-within .card-chart-star:last-child {
+  animation: twinkle 2.6s ease-in-out infinite;
+}
+
+/* 星表行（Projects / Contact / facts…）：发丝分隔，hover 给月色底与名字辉光 */
 .doc-list {
   border-top: 1px solid var(--hairline);
 }
@@ -357,12 +573,15 @@ a.doc-row:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: -2px;
 }
-/* 行内左键名（mono 小字，dim） */
 .doc-key {
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.08em;
   color: var(--t3);
+}
+a.doc-row:hover .doc-name,
+a.doc-row:focus-visible .doc-name {
+  text-shadow: 0 0 14px rgba(var(--cyan-rgb), 0.55);
 }
 .doc-arrow {
   color: var(--t3);
@@ -376,14 +595,37 @@ a.doc-row:focus-visible .doc-arrow {
   transform: translateX(2px);
 }
 
+/* 技能 chip：星子状小丸，hover 亮边与字 */
+.chip-star {
+  border: 1px solid var(--line);
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.chip-star:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  color: var(--ink);
+  box-shadow: 0 0 12px -2px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
 /* ============================================================
-   终端窗（#cv）：真字节、真 ANSI、命令可复制
+   深空观测窗（#cv）：真字节、真 ANSI、命令可复制
    ============================================================ */
 .term {
+  position: relative;
   overflow: hidden;
-  border: 1px solid var(--hairline);
-  border-radius: 12px;
-  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-top-color: rgba(var(--cyan-rgb), 0.3);
+  border-radius: 14px;
+  background: linear-gradient(
+    165deg,
+    rgba(var(--bg3-rgb), 0.6),
+    rgba(var(--bg2-rgb), 0.5)
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 24px 70px -34px rgba(var(--cyan-rgb), 0.4);
 }
 .term-titlebar {
   display: flex;
@@ -399,20 +641,21 @@ a.doc-row:focus-visible .doc-arrow {
 .term-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem;
+  gap: 0.375rem;
   padding: 0.625rem 0.9rem 0;
 }
 .term-tab {
-  border: 0;
-  border-radius: 6px;
+  border: 1px solid transparent;
+  border-radius: 9999px;
   background: transparent;
-  padding: 0.3rem 0.6rem;
+  padding: 0.3rem 0.7rem;
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--t3);
   cursor: pointer;
   transition:
     background-color 0.15s ease,
+    border-color 0.15s ease,
     color 0.15s ease;
 }
 @media (hover: hover) and (pointer: fine) {
@@ -423,9 +666,11 @@ a.doc-row:focus-visible .doc-arrow {
 }
 .term-tab[aria-selected="true"] {
   background: var(--fill-2);
+  border-color: rgba(var(--cyan-rgb), 0.35);
   color: var(--accent);
 }
 .term-body {
+  position: relative;
   overflow-x: auto;
   padding: 0.9rem;
   font-family: var(--font-mono);
@@ -477,7 +722,7 @@ html[data-motion="on"] .term-out-line {
 }
 .term-copy[data-copied="true"] {
   color: var(--accent);
-  border-color: rgba(94, 231, 255, 0.45);
+  border-color: rgba(var(--cyan-rgb), 0.45);
 }
 
 /* ============================================================
